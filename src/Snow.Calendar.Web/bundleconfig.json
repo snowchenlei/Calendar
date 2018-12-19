@@ -1,0 +1,37 @@
+[
+  {
+    "outputFileName": "wwwroot/css/layout.min.css",
+    "inputFiles": [
+      "wwwroot/css/layout.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/reset.min.css",
+    "inputFiles": [
+      "wwwroot/css/reset.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/index.min.css",
+    "inputFiles": [
+      "wwwroot/css/index.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/wnlImprove.min.css",
+    "inputFiles": [
+      "wwwroot/css/wnlImprove.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/index.min.js",
+    "inputFiles": [
+      "wwwroot/js/index.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

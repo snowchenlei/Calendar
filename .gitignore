@@ -3,3 +3,5 @@
 ################################################################################
 
 /src/.vs
+/src/Snow.Calendar.Web/bin
+/src/Snow.Calendar.Web/obj
