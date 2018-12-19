@@ -7,6 +7,7 @@ var thisDate = date.getDate();
 var year = parseInt($('#yearSel').val());
 var month = parseInt($('#monthSel').val());
 var day = thisDate;
+var isChange = true;
 
 var $lastBlock;
 $(function () {
@@ -22,7 +23,7 @@ function loadContent() {
         function (data) {
             document.getElementById('headerHtml').innerHTML = data.header;
             document.getElementById('bodyHtml').innerHTML = data.body;
-            if (year === thisYear && month === thisMonth) {
+            if (year === thisYear && month === thisMonth && document.getElementById('worlDay').innerText === '') {
                 $('#today_button').click();
             }
         });
@@ -57,14 +58,19 @@ function loadDay() {
         });
 }
 
+function changeDate() {
+    isChange = false;
+    $('#yearSel').selectpicker('val', year);
+    $('#monthSel').selectpicker('val', month);
+}
+
 // 初始化事件
 function initEvent() {
     $('#subMonth').click(function () {
         if (month === 1) {
             year -= 1;
             month = 12;
-            $('#yearSel').selectpicker('val', year);
-            $('#monthSel').selectpicker('val', month);
+            changeDate();
         } else {
             month -= 1;
             $('#monthSel').selectpicker('val', month);
@@ -74,8 +80,7 @@ function initEvent() {
         if (month === 12) {
             year += 1;
             month = 1;
-            $('#yearSel').selectpicker('val', year);
-            $('#monthSel').selectpicker('val', month);
+            changeDate();
         } else {
             month += 1;
             $('#monthSel').selectpicker('val', month);
@@ -89,7 +94,6 @@ function initEvent() {
                 day = parseInt($e.find('.number')[0].innerText);
             }
             clickBlock($e);
-            //loadDay();
         });
     $('#today_button').click(function () {
         if (thisYear !== year) {
@@ -103,7 +107,11 @@ function initEvent() {
     });
     $('#yearSel').change(function () {
         year = parseInt($(this).val());
-        loadContent();
+        if (isChange) {
+            loadContent();
+        } else {
+            isChange = true;
+        }
     });
     $('#monthSel').change(function () {
         month = parseInt($('#monthSel').val());

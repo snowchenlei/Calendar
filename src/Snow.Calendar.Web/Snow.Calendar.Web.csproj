@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Cl\git\Snow.Calendar\Snow.Calendar.Web\Snow.Calendar.Web.xml</DocumentationFile>
+    <DocumentationFile>D:\Cl\git\Calendar\src\Snow.Calendar.Web\Snow.Calendar.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
