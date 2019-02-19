@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AspectCore.Configuration;
+using AspectCore.Extensions.DependencyInjection;
+using AspectCore.Injector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +20,8 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Snow.Calendar.Web.Common;
+using Snow.Calendar.Web.Interceptor;
+using Snow.Calendar.Web.Model;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Snow.Calendar.Web
@@ -32,12 +37,13 @@ namespace Snow.Calendar.Web
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<Resource>();
             services.AddTransient<ChineseCalendarInfo>();
-            services.AddTransient<DateHelper>();
+            services.AddTransient<IDateHelper, DateHelper>();
             services.AddTransient<SolarTerm>();
+            services.AddTransient<IBuildHtml, BuildHtml>();
             services.AddTransient<Constellation>();
 
             services.AddMemoryCache();
@@ -98,6 +104,13 @@ namespace Snow.Calendar.Web
             services.AddCors();
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+
+            services.ConfigureDynamicProxy(config =>
+            {
+                config.Interceptors.AddTyped<CacheInterceptorAttribute>();
+            });
+            var container = services.ToServiceContainer();
+            return container.Build();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

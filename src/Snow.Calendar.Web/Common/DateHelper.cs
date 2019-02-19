@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspectCore.DynamicProxy;
 using Microsoft.Extensions.Caching.Memory;
+using Snow.Calendar.Web.Interceptor;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Common
@@ -10,22 +12,75 @@ namespace Snow.Calendar.Web.Common
     /// <summary>
     /// 日期帮助类
     /// </summary>
-    public class DateHelper
+    public interface IDateHelper
     {
-        private readonly ChineseCalendarInfo _chineseCalendar;
+        /// <summary>
+        /// 获取日期
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        DateTime[] GetDates(string str);
+
+        /// <summary>
+        /// 获取日期
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        DateTime GetDate(string str);
+
+        /// <summary>
+        /// 获取月的日期
+        /// </summary>
+        /// <param name="year">年份</param>
+        /// <param name="month">月份</param>
+        /// <returns>某年某月的所有日期</returns>
+        List<DateTime> GetDatesByMonth(int year, int month);
+
+        /// <summary>
+        /// 获取年日期
+        /// </summary>
+        /// <param name="year">年份</param>
+        /// <returns>某年的所有日期</returns>
+        List<DateTime> GetDaysByYear(int year);
+
+        /// <summary>
+        /// 获取节日
+        /// </summary>
+        /// <param name="calendarDate">万年历日期</param>
+        /// <returns></returns>
+        List<string> GetHoliday(CalendarDate calendarDate);
+
+        /// <summary>
+        /// 公历日期转万年历日期
+        /// </summary>
+        /// <param name="dts">公历日期</param>
+        /// <returns>万年历日期</returns>
+        List<CalendarDate> GetCalendarDates(IEnumerable<DateTime> dts);
+
+        /// <summary>
+        /// 公历日期转万年历日期
+        /// </summary>
+        /// <param name="dt">公历日期</param>
+        /// <returns>万年历日期</returns>
+        CalendarDate GetCalendarDate(DateTime dt);
+    }
+
+    /// <summary>
+    /// 日期帮助类
+    /// </summary>
+    public class DateHelper : IDateHelper
+    {
+        private readonly Resource _resource;
         private readonly SolarTerm _solarTerm;
         private readonly Constellation _constellation;
-        private readonly Resource _resource;
-        private readonly IMemoryCache _memoryCache;
+        private readonly ChineseCalendarInfo _chineseCalendar;
 
         public DateHelper(ChineseCalendarInfo chineseCalendar,
             SolarTerm solarTerm,
-            IMemoryCache memoryCache,
             Constellation constellation,
             Resource resource)
         {
             _chineseCalendar = chineseCalendar;
-            _memoryCache = memoryCache;
             _solarTerm = solarTerm;
             _constellation = constellation;
             _resource = resource;
@@ -34,15 +89,14 @@ namespace Snow.Calendar.Web.Common
         /// <summary>
         /// 获取日期
         /// </summary>
-        /// <param name="strs"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
-        public DateTime[] GetDates(string strs)
+        public DateTime[] GetDates(string str)
         {
             DateTime[] dates = null;
             try
-
             {
-                string[] strMonths = strs.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] strMonths = str.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 dates = Array.ConvertAll(strMonths, Convert.ToDateTime);
             }
             catch (FormatException ex)
@@ -75,44 +129,19 @@ namespace Snow.Calendar.Web.Common
         }
 
         /// <summary>
-        /// 获取年日期缓存
-        /// </summary>
-        /// <param name="year">年份</param>
-        /// <returns>某年的所有日期</returns>
-        public List<DateTime> GetYearDaysCache(int year)
-        {
-            return _memoryCache
-                .GetOrCreate($"GetYearDays({year})",
-                    entry => GetYearDays(year));
-        }
-
-        /// <summary>
         /// 获取年日期
         /// </summary>
         /// <param name="year">年份</param>
         /// <returns>某年的所有日期</returns>
-        private List<DateTime> GetYearDays(int year)
+        public List<DateTime> GetDaysByYear(int year)
         {
             List<DateTime> days = new List<DateTime>();
             for (int i = 1; i <= 12; i++)
             {
-                days.AddRange(GetMonthDaysCache(year, i));
+                days.AddRange(GetDatesByMonth(year, i));
             }
 
             return days;
-        }
-
-        /// <summary>
-        /// 获取月的日期缓存
-        /// </summary>
-        /// <param name="year">年份</param>
-        /// <param name="month">月份</param>
-        /// <returns>某年某月的所有日期</returns>
-        public List<DateTime> GetMonthDaysCache(int year, int month)
-        {
-            return _memoryCache
-                .GetOrCreate($"GetMonthDays({year},{month})",
-                    entry => GetMonthDays(year, month));
         }
 
         /// <summary>
@@ -121,10 +150,10 @@ namespace Snow.Calendar.Web.Common
         /// <param name="year">年份</param>
         /// <param name="month">月份</param>
         /// <returns>某年某月的所有日期</returns>
-        private List<DateTime> GetMonthDays(int year, int month)
+        public List<DateTime> GetDatesByMonth(int year, int month)
         {
             List<DateTime> days = new List<DateTime>();
-            for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
+            for (int i = 1, max = DateTime.DaysInMonth(year, month); i <= max; i++)
             {
                 days.Add(new DateTime(year, month, i));
             }
@@ -132,65 +161,34 @@ namespace Snow.Calendar.Web.Common
             return days;
         }
 
-        public List<Date> GetDaysCache(IEnumerable<DateTime> dts)
+        /// <summary>
+        /// 公历日期转万年历日期
+        /// </summary>
+        /// <param name="dts">公历日期</param>
+        /// <returns>万年历日期</returns>
+        public List<CalendarDate> GetCalendarDates(IEnumerable<DateTime> dts)
         {
-            return _memoryCache
-                .GetOrCreate($"GetDays({String.Join(',', dts.ToList().Select(c => c.ToString("yyyyMMdd")))})",
-                    entry => GetDays(dts));
-        }
-
-        private List<Date> GetDays(IEnumerable<DateTime> dts)
-        {
-            List<Date> days = new List<Date>();
+            List<CalendarDate> days = new List<CalendarDate>();
             foreach (DateTime dt in dts)
             {
-                days.Add(GetDayCache(dt));
+                days.Add(GetCalendarDate(dt));
             }
             return days;
         }
 
-        public List<string> GetHoliday(Date date)
-        {
-            List<string> holidays = new List<string>();
-            if (date.Day.LunarHoliday.Value != null)
-            {
-                holidays.AddRange(date.Day.LunarHoliday.Value?.Split(' '));
-            }
-
-            if (date.Day.SolarHoliday.Value != null)
-            {
-                holidays.AddRange(date.Day.SolarHoliday.Value?.Split(' '));
-            }
-
-            if (holidays.Any())
-            {
-                holidays = holidays.Where(s => !String.IsNullOrEmpty(s)).ToList();
-            }
-
-            return holidays;
-            //return String.Join(' ', holidays);
-        }
-
         /// <summary>
-        /// 获取日期信息缓存
+        /// 公历日期转万年历日期
         /// </summary>
-        /// <param name="dt">时间</param>
-        /// <returns>日期信息</returns>
-        public Date GetDayCache(DateTime dt)
-        {
-            return _memoryCache
-                 .GetOrCreate(dt.ToShortDateString(),
-                     entry => GetDay(dt));
-        }
-
-        public Date GetDay(DateTime dt)
+        /// <param name="dt">公历日期</param>
+        /// <returns>万年历日期</returns>
+        public CalendarDate GetCalendarDate(DateTime dt)
         {
             _chineseCalendar.SolarDate = dt;
-            Date date = new Date()
+            CalendarDate calendarDate = new CalendarDate()
             {
                 CurrentDate = dt.ToString("D"),
                 LunarText = _chineseCalendar.LunarText,
-                Year = new Year()
+                CalendarYear = new CalendarYear()
                 {
                     CurrentYear = dt.Year,
                     LunarYear = _chineseCalendar.LunarYear,
@@ -202,7 +200,7 @@ namespace Snow.Calendar.Web.Common
                     LunarYearSexagenary = _chineseCalendar.LunarYearSexagenary,
                     LunarYearNaYinFiveElements = _chineseCalendar.LunarYearNaYinFiveElements,
                 },
-                Month = new Month()
+                CalendarMonth = new CalendarMonth()
                 {
                     CurrentMonth = dt.Month,
                     LunarMonth = _chineseCalendar.LunarMonth,
@@ -213,8 +211,7 @@ namespace Snow.Calendar.Web.Common
                     IsBigMonth = new int[] { 1, 3, 5, 7, 8, 10, 12 }.Contains(dt.Month) ? true : false,
                     LunarMonthNaYinFiveElements = _chineseCalendar.LunarMonthNaYinFiveElements,
                 },
-
-                Day = new Day()
+                CalendarDay = new CalendarDay()
                 {
                     CurrentDay = dt.Day,
                     LunarDay = _chineseCalendar.LunarDay,
@@ -243,9 +240,35 @@ namespace Snow.Calendar.Web.Common
                 }
             };
 
-            date.LunarDateSexagenary =
-                                $"{date.Year.LunarYearSexagenary}({date.Year.LunarYearAnimal})年{date.Month.LunarMonthSexagenary}月{date.Day.LunarDaySexagenary}日";
-            return date;
+            calendarDate.LunarDateSexagenary =
+                                $"{calendarDate.CalendarYear.LunarYearSexagenary}({calendarDate.CalendarYear.LunarYearAnimal})年{calendarDate.CalendarMonth.LunarMonthSexagenary}月{calendarDate.CalendarDay.LunarDaySexagenary}日";
+            return calendarDate;
+        }
+
+        /// <summary>
+        /// 获取节日
+        /// </summary>
+        /// <param name="calendarDate">万年历日期</param>
+        /// <returns></returns>
+        public List<string> GetHoliday(CalendarDate calendarDate)
+        {
+            List<string> holidays = new List<string>();
+            if (calendarDate.CalendarDay.LunarHoliday.Value != null)
+            {
+                holidays.AddRange(calendarDate.CalendarDay.LunarHoliday.Value?.Split(' '));
+            }
+
+            if (calendarDate.CalendarDay.SolarHoliday.Value != null)
+            {
+                holidays.AddRange(calendarDate.CalendarDay.SolarHoliday.Value?.Split(' '));
+            }
+
+            if (holidays.Any())
+            {
+                holidays = holidays.Where(s => !String.IsNullOrEmpty(s)).ToList();
+            }
+
+            return holidays;
         }
 
         /// <summary>

@@ -672,7 +672,7 @@ namespace Snow.Calendar.Web.Common
                 //SolarHoliday[] ss = _resource.SolarHoliday;//.Where(a => a.)
                 //foreach (SolarHoliday sh in _resource.SolarHoliday)
                 //{
-                //    if ((sh.Month == SolarDate.Month) && (sh.Day == SolarDate.Day))
+                //    if ((sh.CalendarMonth == SolarDate.CalendarMonth) && (sh.CalendarDay == SolarDate.CalendarDay))
                 //    {
                 //        tempStr = sh.HolidayName;
                 //        break;
@@ -680,7 +680,7 @@ namespace Snow.Calendar.Web.Common
                 //}
                 //foreach (SolarHolidayStruct sh in sHolidayInfo)
                 //{
-                //    if ((sh.Month == SolarDate.Month) && (sh.Day == SolarDate.Day))
+                //    if ((sh.CalendarMonth == SolarDate.CalendarMonth) && (sh.CalendarDay == SolarDate.CalendarDay))
                 //    {
                 //        tempStr = sh.HolidayName;
                 //        break;
@@ -720,7 +720,7 @@ namespace Snow.Calendar.Web.Common
                     }
                     //foreach (LunarHoliday lh in _resource.LunarHoliday)
                     //{
-                    //    if ((lh.Month == this.LunarMonth) && (lh.Day == this.LunarDay))
+                    //    if ((lh.CalendarMonth == this.LunarMonth) && (lh.CalendarDay == this.LunarDay))
                     //    {
                     //        tempStr = lh.HolidayName;
                     //        break;
@@ -749,7 +749,7 @@ namespace Snow.Calendar.Web.Common
                 }
                 //foreach (WeekHolidayStruct wh in wHolidayInfo)
                 //{
-                //    if (CompareWeekDayHoliday(SolarDate, wh.Month, wh.WeekAtMonth, wh.WeekDay))
+                //    if (CompareWeekDayHoliday(SolarDate, wh.CalendarMonth, wh.WeekAtMonth, wh.WeekDay))
                 //    {
                 //        tempStr = wh.HolidayName;
                 //        break;
@@ -866,10 +866,10 @@ namespace Snow.Calendar.Web.Common
 
                 KeyValuePair<DateTime, string> prevTwentyFour = prevTwentyFours.Any()
                     ? prevTwentyFours.OrderByDescending(c => c.Key).First()
-                    : GetDate(SolarDate.Year - 1, SolarTerm.Length - 1);// GetChineseTwentyFours(SolarDate.Year - 1).OrderByDescending(c => c.Key).First();
+                    : GetDate(SolarDate.Year - 1, SolarTerm.Length - 1);// GetChineseTwentyFours(SolarDate.CalendarYear - 1).OrderByDescending(c => c.Key).First();
                 KeyValuePair<DateTime, string> nextTwentyFour = nextTwentyFours.Any()
                     ? nextTwentyFours.OrderBy(c => c.Key).First()
-                    : GetDate(SolarDate.Year + 1, 0);//GetChineseTwentyFours(SolarDate.Year + 1).OrderBy(c => c.Key).First();
+                    : GetDate(SolarDate.Year + 1, 0);//GetChineseTwentyFours(SolarDate.CalendarYear + 1).OrderBy(c => c.Key).First();
 
                 return
                     $"{prevTwentyFour.Value} 第{SolarDate.Subtract(Convert.ToDateTime(prevTwentyFour.Key.ToShortDateString())).Days + 1}天(距\"{nextTwentyFour.Value}\"还有{nextTwentyFour.Key.Subtract(SolarDate).Days}天)";

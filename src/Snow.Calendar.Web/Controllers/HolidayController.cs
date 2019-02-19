@@ -21,11 +21,11 @@ namespace Snow.Calendar.Web.Controllers
     public class HolidayController : ControllerBase
     {
         private readonly Resource _resource;
-        private readonly DateHelper _dateHelper;
+        private readonly IDateHelper _dateHelper;
 
         public HolidayController(
             Resource resource,
-            DateHelper dateHelper)
+            IDateHelper dateHelper)
         {
             _resource = resource;
             _dateHelper = dateHelper;
@@ -73,7 +73,7 @@ namespace Snow.Calendar.Web.Controllers
             List<DateTime> days = new List<DateTime>();
             foreach (DateTime m in months)
             {
-                days.AddRange(_dateHelper.GetMonthDaysCache(m.Year, m.Month));
+                days.AddRange(_dateHelper.GetDatesByMonth(m.Year, m.Month));
             }
             return Ok(new Response<IEnumerable<HolidayYears>>()
             {
@@ -102,8 +102,7 @@ namespace Snow.Calendar.Web.Controllers
             List<DateTime> days = new List<DateTime>();
             foreach (int y in years)
             {
-                //days.AddRange(_dateHelper.GetYearDays(y));
-                days.AddRange(_dateHelper.GetYearDaysCache(y));
+                days.AddRange(_dateHelper.GetDaysByYear(y));
             }
             return Ok(new Response<IEnumerable<HolidayYears>>()
             {

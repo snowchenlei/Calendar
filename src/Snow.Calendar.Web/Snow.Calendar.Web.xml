@@ -771,6 +771,61 @@
             <param name="day">农历日</param>
             <returns>星宿信息</returns>
         </member>
+        <member name="T:Snow.Calendar.Web.Common.IDateHelper">
+            <summary>
+            日期帮助类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDates(System.String)">
+            <summary>
+            获取日期
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDate(System.String)">
+            <summary>
+            获取日期
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDatesByMonth(System.Int32,System.Int32)">
+            <summary>
+            获取月的日期
+            </summary>
+            <param name="year">年份</param>
+            <param name="month">月份</param>
+            <returns>某年某月的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDaysByYear(System.Int32)">
+            <summary>
+            获取年日期
+            </summary>
+            <param name="year">年份</param>
+            <returns>某年的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取节日
+            </summary>
+            <param name="calendarDate">万年历日期</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dts">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetCalendarDate(System.DateTime)">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dt">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
         <member name="T:Snow.Calendar.Web.Common.DateHelper">
             <summary>
             日期帮助类
@@ -780,7 +835,7 @@
             <summary>
             获取日期
             </summary>
-            <param name="strs"></param>
+            <param name="str"></param>
             <returns></returns>
         </member>
         <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDate(System.String)">
@@ -790,29 +845,14 @@
             <param name="str"></param>
             <returns></returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetYearDaysCache(System.Int32)">
-            <summary>
-            获取年日期缓存
-            </summary>
-            <param name="year">年份</param>
-            <returns>某年的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetYearDays(System.Int32)">
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDaysByYear(System.Int32)">
             <summary>
             获取年日期
             </summary>
             <param name="year">年份</param>
             <returns>某年的所有日期</returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetMonthDaysCache(System.Int32,System.Int32)">
-            <summary>
-            获取月的日期缓存
-            </summary>
-            <param name="year">年份</param>
-            <param name="month">月份</param>
-            <returns>某年某月的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetMonthDays(System.Int32,System.Int32)">
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDatesByMonth(System.Int32,System.Int32)">
             <summary>
             获取月的日期
             </summary>
@@ -820,12 +860,26 @@
             <param name="month">月份</param>
             <returns>某年某月的所有日期</returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDayCache(System.DateTime)">
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
             <summary>
-            获取日期信息缓存
+            公历日期转万年历日期
             </summary>
-            <param name="dt">时间</param>
-            <returns>日期信息</returns>
+            <param name="dts">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetCalendarDate(System.DateTime)">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dt">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取节日
+            </summary>
+            <param name="calendarDate">万年历日期</param>
+            <returns></returns>
         </member>
         <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDayType(System.DateTime)">
             <summary>
@@ -1122,20 +1176,6 @@
             <param name="day">日</param>
             <returns>日信息</returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Controllers.HomeController.GetCanlendarDay(Snow.Calendar.Web.Model.Date)">
-            <summary>
-            获取万年历信息
-            </summary>
-            <param name="date"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Controllers.HomeController.GetSubhead(Snow.Calendar.Web.Model.Date)">
-            <summary>
-            获取副标题
-            </summary>
-            <param name="date"></param>
-            <returns></returns>
-        </member>
         <member name="M:Snow.Calendar.Web.Controllers.HomeController.Error">
             <summary>
             错误页
@@ -1152,6 +1192,58 @@
             获取小时的干支
             </summary>
             <param name="hour">,分割的时间串</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Model.IBuildHtml">
+            <summary>
+            编译Html
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.IBuildHtml.CreateHeder">
+            <summary>
+            创建头部
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.IBuildHtml.CreateBody(System.Int32,System.Int32)">
+            <summary>
+            创建内容
+            </summary>
+            <param name="year">年份</param>
+            <param name="month">月份</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Model.BuildHtml">
+            <summary>
+            编译Html
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.BuildHtml.CreateHeder">
+            <summary>
+            创建头部
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.BuildHtml.CreateBody(System.Int32,System.Int32)">
+            <summary>
+            创建内容
+            </summary>
+            <param name="year">年份</param>
+            <param name="month">月份</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.BuildHtml.GetCanlendarDay(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取万年历信息
+            </summary>
+            <param name="calendarDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Model.BuildHtml.GetSubhead(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取副标题
+            </summary>
+            <param name="calendarDate"></param>
             <returns></returns>
         </member>
         <member name="T:Snow.Calendar.Web.Model.CanlendarDayInfo">
@@ -1260,178 +1352,193 @@
             日类型
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.CurrentYear">
+        <member name="T:Snow.Calendar.Web.Model.CalendarYear">
+            <summary>
+            万年历年
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.CurrentYear">
             <summary>
             阳历年
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.DaysOfYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.DaysOfYear">
             <summary>
             当年总天数
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.LunarYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.LunarYear">
             <summary>
             阴历年份
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.LunarYearText">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.LunarYearText">
             <summary>
             阴历年中文
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.IsLeapLunarYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.IsLeapLunarYear">
             <summary>
             是否闰年
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.LunarYearLeapMonth">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.LunarYearLeapMonth">
             <summary>
             闰几月(0则不闰)
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.LunarYearSexagenary">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.LunarYearSexagenary">
             <summary>
             干支年
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Year.LunarYearNaYinFiveElements">
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.LunarYearNaYinFiveElements">
             <summary>
             年纳音五行
             </summary>
         </member>
-        <!-- 对于成员“P:Snow.Calendar.Web.Model.Year.LunarYearAnimal”忽略有格式错误的 XML 注释 -->
-        <member name="P:Snow.Calendar.Web.Model.Year.SolarBirthStone">
+        <!-- 对于成员“P:Snow.Calendar.Web.Model.CalendarYear.LunarYearAnimal”忽略有格式错误的 XML 注释 -->
+        <member name="P:Snow.Calendar.Web.Model.CalendarYear.SolarBirthStone">
             <summary>
             阳历诞生石
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Month.IsLeapLunarMonth">
+        <member name="T:Snow.Calendar.Web.Model.CalendarMonth">
+            <summary>
+            万年历月
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.CalendarMonth.IsLeapLunarMonth">
             <summary>
             是否闰月
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Month.LunarMonthSexagenary">
+        <member name="P:Snow.Calendar.Web.Model.CalendarMonth.LunarMonthSexagenary">
             <summary>
             干支月
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Month.LunarMonthNaYinFiveElements">
+        <member name="P:Snow.Calendar.Web.Model.CalendarMonth.LunarMonthNaYinFiveElements">
             <summary>
             月纳音五行
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Month.IsBiglunarMonth">
+        <member name="P:Snow.Calendar.Web.Model.CalendarMonth.IsBiglunarMonth">
             <summary>
             是否农历月大
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Month.IsBigMonth">
+        <member name="P:Snow.Calendar.Web.Model.CalendarMonth.IsBigMonth">
             <summary>
             是否月大
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarDay">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarDay">
             <summary>
             阴历月中日期
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarDayText">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarDayText">
             <summary>
             阴历月中日期字符串
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.DayOfYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.DayOfYear">
             <summary>
             一年的第几天
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.DayOfWeek">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.DayOfWeek">
             <summary>
             周几
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.DayOfWeekText">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.DayOfWeekText">
             <summary>
             字符串
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarDaySexagenary">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarDaySexagenary">
             <summary>
             干支日
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarDayNaYinFiveElements">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarDayNaYinFiveElements">
             <summary>
             日纳音五行
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.Holiday">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.Holiday">
             <summary>
             节日
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarHoliday">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarHoliday">
             <summary>
             中国农历节日
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarHoliday">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarHoliday">
             <summary>
             按公历日计算的节日
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarWeekOfYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarWeekOfYear">
             <summary>
             农历年中第几周
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.WeekOfYear">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.WeekOfYear">
             <summary>
             公历年中第几周
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarTerm">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarTerm">
             <summary>
             24节气
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarTermDays">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarTermDays">
             <summary>
             24节气描述
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarConstellation">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarConstellation">
             <summary>
             星座
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.LunarConstellation">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarConstellation">
             <summary>
             28星宿计算
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarPalace">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarPalace">
             <summary>
             星宫
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Day.SolarPlanet">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarPlanet">
             <summary>
             行星
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Date.CurrentDate">
+        <member name="T:Snow.Calendar.Web.Model.CalendarDate">
+            <summary>
+            万年历日期描述
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.CalendarDate.CurrentDate">
             <summary>
             阳历日期
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Date.LunarText">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDate.LunarText">
             <summary>
             农历日期
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Model.Date.LunarDateSexagenary">
+        <member name="P:Snow.Calendar.Web.Model.CalendarDate.LunarDateSexagenary">
             <summary>
             干支日
             </summary>

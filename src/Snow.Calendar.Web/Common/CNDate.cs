@@ -1493,7 +1493,7 @@ namespace Snow.Calendar.Web.Common
 
         #region 公历日期
 
-        #region Date
+        #region CalendarDate
 
         /// <summary>
         /// 取对应的公历日期
@@ -1504,7 +1504,7 @@ namespace Snow.Calendar.Web.Common
             set { _date = value; }
         }
 
-        #endregion Date
+        #endregion CalendarDate
 
         #region WeekDay
 

@@ -9,7 +9,7 @@ namespace Snow.Calendar.Web.Model
     {
         public int Year { get; set; }
         public string YearDescription { get; set; }
-        public IEnumerable<Month> Months { get; set; }
+        public IEnumerable<CalendarMonth> Months { get; set; }
     }
 
     public class CanlendarDay

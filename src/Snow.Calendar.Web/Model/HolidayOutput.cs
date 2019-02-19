@@ -58,7 +58,10 @@ namespace Snow.Calendar.Web.Model
         public DayType DayType { get; set; }
     }
 
-    public class Year
+    /// <summary>
+    /// 万年历年
+    /// </summary>
+    public class CalendarYear
     {
         /// <summary>
         /// 阳历年
@@ -112,7 +115,10 @@ namespace Snow.Calendar.Web.Model
         public string SolarBirthStone { get; set; }
     }
 
-    public class Month
+    /// <summary>
+    /// 万年历月
+    /// </summary>
+    public class CalendarMonth
     {
         public int CurrentMonth { get; set; }
 
@@ -146,7 +152,7 @@ namespace Snow.Calendar.Web.Model
         public bool IsBigMonth { get; set; }
     }
 
-    public class Day
+    public class CalendarDay
     {
         public int CurrentDay { get; set; }
 
@@ -258,7 +264,10 @@ namespace Snow.Calendar.Web.Model
         public DayType DayType { get; set; }
     }
 
-    public class Date
+    /// <summary>
+    /// 万年历日期描述
+    /// </summary>
+    public class CalendarDate
     {
         /// <summary>
         /// 阳历日期
@@ -275,8 +284,8 @@ namespace Snow.Calendar.Web.Model
         /// </summary>
         public string LunarDateSexagenary { get; set; }
 
-        public Year Year { get; set; }
-        public Month Month { get; set; }
-        public Day Day { get; set; }
+        public CalendarYear CalendarYear { get; set; }
+        public CalendarMonth CalendarMonth { get; set; }
+        public CalendarDay CalendarDay { get; set; }
     }
 }

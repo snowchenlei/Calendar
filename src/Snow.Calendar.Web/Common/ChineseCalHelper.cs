@@ -821,7 +821,7 @@ namespace HD.Helper.Common
         #endregion
 
         #region 公历日期
-        #region Date
+        #region CalendarDate
         /// <summary>
         /// 取对应的公历日期
         /// </summary>

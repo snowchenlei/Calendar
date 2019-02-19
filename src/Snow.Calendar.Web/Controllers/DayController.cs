@@ -21,12 +21,12 @@ namespace Snow.Calendar.Web.Controllers
     public class DayController : ControllerBase
     {
         private readonly ChineseCalendarInfo _chineseCalendar;
-        private readonly DateHelper _dateHelper;
+        private readonly IDateHelper _dateHelper;
         private readonly Resource _resource;
 
         public DayController(
             ChineseCalendarInfo chineseCalendar,
-            DateHelper dateHelper,
+            IDateHelper dateHelper,
             Resource resource)
         {
             _chineseCalendar = chineseCalendar;
@@ -45,15 +45,15 @@ namespace Snow.Calendar.Web.Controllers
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet, Route("days"),
-         ProducesResponseType(typeof(Response<IEnumerable<Date>>), 200)]
+         ProducesResponseType(typeof(Response<IEnumerable<CalendarDate>>), 200)]
         public IActionResult Days(string day)
         {
             DateTime[] days = _dateHelper.GetDates(day);
-            return Ok(new Response<IEnumerable<Date>>()
+            return Ok(new Response<IEnumerable<CalendarDate>>()
             {
                 Code = 1,
                 Message = "获取成功",
-                Data = _dateHelper.GetDaysCache(days)
+                Data = _dateHelper.GetCalendarDates(days)
             });
         }
 
@@ -68,7 +68,7 @@ namespace Snow.Calendar.Web.Controllers
         /// <response code="200">获取成功</response>
         /// <returns></returns>
         [HttpGet, Route("months"),
-         ProducesResponseType(typeof(Response<IEnumerable<Date>>), 200)]
+         ProducesResponseType(typeof(Response<IEnumerable<CalendarDate>>), 200)]
         public IActionResult Months(string month)
         {
             DateTime[] months = _dateHelper.GetDates(month);
@@ -76,13 +76,13 @@ namespace Snow.Calendar.Web.Controllers
             List<DateTime> days = new List<DateTime>();
             foreach (DateTime m in months)
             {
-                days.AddRange(_dateHelper.GetMonthDaysCache(m.Year, m.Month));
+                days.AddRange(_dateHelper.GetDatesByMonth(m.Year, m.Month));
             }
-            return Ok(new Response<IEnumerable<Date>>()
+            return Ok(new Response<IEnumerable<CalendarDate>>()
             {
                 Code = 1,
                 Message = "获取成功",
-                Data = _dateHelper.GetDaysCache(days)
+                Data = _dateHelper.GetCalendarDates(days)
             });
         }
 

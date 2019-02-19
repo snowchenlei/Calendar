@@ -30,148 +30,32 @@ namespace Snow.Calendar.Web.Common
         /// <summary>
         /// 节假日(休息)
         /// </summary>
-        public Dictionary<int, Dictionary<int, int[]>> Holidays
-        {
-            get
-            {
-                //return _cache.GetOrCreate("Workdays", entry =>
-                //{
-                //    string path = "Config/holiday.json";
-                //    entry.AddExpirationToken(_fileProvider.Watch(path));
-
-                //    IFileInfo file = _fileProvider.GetFileInfo(path);
-                //    using (var stream = file.CreateReadStream())
-                //    {
-                //        using (var reader = new StreamReader(stream))
-                //        {
-                //            string output = reader.ReadToEnd();
-                //            return JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int[]>>>(output);
-                //        }
-                //    }
-                //});
-                return Get<Dictionary<int, Dictionary<int, int[]>>>("Holidays", "Config/holiday.json");
-            }
-        }
+        public Dictionary<int, Dictionary<int, int[]>> Holidays => Get<Dictionary<int, Dictionary<int, int[]>>>("Holidays", "Config/holiday.json");
 
         /// <summary>
         /// 工作日(补班)
         /// </summary>
-        public Dictionary<int, Dictionary<int, int[]>> Workdays
-        {
-            get
-            {
-                return Get<Dictionary<int, Dictionary<int, int[]>>>("Workdays", "Config/workday.json");
-                //return _cache.GetOrCreate("Workdays", entry =>
-                //{
-                //    string path = "Config/workday.json";
-                //    entry.AddExpirationToken(_fileProvider.Watch(path));
-
-                //    IFileInfo file = _fileProvider.GetFileInfo(path);
-                //    using (var stream = file.CreateReadStream())
-                //    {
-                //        using (var reader = new StreamReader(stream))
-                //        {
-                //            string output = reader.ReadToEnd();
-                //            return JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int[]>>>(output);
-                //        }
-                //    }
-                //});
-            }
-        }
+        public Dictionary<int, Dictionary<int, int[]>> Workdays => Get<Dictionary<int, Dictionary<int, int[]>>>("Workdays", "Config/workday.json");
 
         /// <summary>
         /// 按公历计算的节日
         /// </summary>
-        public SolarHoliday[] SolarHoliday
-        {
-            get
-            {
-                return Get<SolarHoliday[]>("SolarHoliday", "Config/solarHoliday.json");
-                //return _cache.GetOrCreate("SolarHoliday", entry =>
-                //{
-                //    string path = "Config/solarHoliday.json";
-                //    entry.AddExpirationToken(_fileProvider.Watch(path));
-
-                //    IFileInfo file = _fileProvider.GetFileInfo(path);
-                //    using (var stream = file.CreateReadStream())
-                //    {
-                //        using (var reader = new StreamReader(stream, Encoding.UTF8))
-                //        {
-                //            string output = reader.ReadToEnd();
-                //            return JsonConvert.DeserializeObject<SolarHoliday[]>(output);
-                //        }
-                //    }
-                //});
-            }
-        }
+        public SolarHoliday[] SolarHoliday => Get<SolarHoliday[]>("SolarHoliday", "Config/solarHoliday.json");
 
         /// <summary>
         /// 按农历计算的节日
         /// </summary>
-        public LunarHoliday[] LunarHoliday
-        {
-            get
-            {
-                return Get<LunarHoliday[]>("LunarHoliday", "Config/lunarHoliday.json");
-                //IFileInfo file = _fileProvider.GetFileInfo("Config/lunarHoliday.json");
-                //using (var stream = file.CreateReadStream())
-                //{
-                //    using (var reader = new StreamReader(stream))
-                //    {
-                //        string output = reader.ReadToEnd();
-                //        return JsonConvert.DeserializeObject<LunarHoliday[]>(output);
-                //    }
-                //}
-            }
-        }
+        public LunarHoliday[] LunarHoliday => Get<LunarHoliday[]>("LunarHoliday", "Config/lunarHoliday.json");
 
         /// <summary>
         /// 按某月第几个星期几
         /// </summary>
-        public WeekHoliday[] WeekHoliday
-        {
-            get
-            {
-                return Get<WeekHoliday[]>("WeekHoliday", "Config/weekHoliday.json");
-
-                //IFileInfo file = _fileProvider.GetFileInfo("Config/weekHoliday.json");
-                //using (var stream = file.CreateReadStream())
-                //{
-                //    using (var reader = new StreamReader(stream))
-                //    {
-                //        string output = reader.ReadToEnd();
-                //        return JsonConvert.DeserializeObject<WeekHoliday[]>(output);
-                //    }
-                //}
-            }
-        }
+        public WeekHoliday[] WeekHoliday => Get<WeekHoliday[]>("WeekHoliday", "Config/weekHoliday.json");
 
         /// <summary>
         /// 节气
         /// </summary>
-        public SolarModel[] SolarTerms
-        {
-            get
-            {
-                return Get<SolarModel[]>("SolarTerms", "Config/solarTerm.json");
-                //IFileInfo file = _fileProvider.GetFileInfo("Config/solarTerm.json");
-                //using (var stream = file.CreateReadStream())
-                //{
-                //    using (var reader = new StreamReader(stream, Encoding.UTF8))
-                //    {
-                //        string output = reader.ReadToEnd();
-                //        try
-                //        {
-                //            return JsonConvert.DeserializeObject<SolarModel[]>(output);
-                //        }
-                //        catch (Exception e)
-                //        {
-                //            return null;
-                //        }
-                //    }
-                //}
-            }
-        }
+        public SolarModel[] SolarTerms => Get<SolarModel[]>("SolarTerms", "Config/solarTerm.json");
 
         /// <summary>
         /// 获取Json数据

@@ -17,11 +17,11 @@ namespace Snow.Calendar.Web.Controllers
     public class HourController : ControllerBase
     {
         private readonly ChineseCalendarInfo _chineseCalendar;
-        private readonly DateHelper _dateHelper;
+        private readonly IDateHelper _dateHelper;
 
         public HourController(
             ChineseCalendarInfo chineseCalendar,
-            DateHelper dateHelper)
+            IDateHelper dateHelper)
         {
             _chineseCalendar = chineseCalendar;
             _dateHelper = dateHelper;
