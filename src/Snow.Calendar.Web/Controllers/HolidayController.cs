@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Snow.Calendar.Web.Common;
+using Snow.Calendar.Web.Common.Extension;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Controllers
@@ -20,15 +21,15 @@ namespace Snow.Calendar.Web.Controllers
     [ApiController]
     public class HolidayController : ControllerBase
     {
-        private readonly Resource _resource;
         private readonly IDateHelper _dateHelper;
+        private readonly IHolidayHelper _holidayHelper;
 
         public HolidayController(
-            Resource resource,
-            IDateHelper dateHelper)
+            IDateHelper dateHelper
+            , IHolidayHelper holidayHelper)
         {
-            _resource = resource;
             _dateHelper = dateHelper;
+            _holidayHelper = holidayHelper;
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Snow.Calendar.Web.Controllers
          ProducesResponseType(typeof(Response<IEnumerable<HolidayYears>>), 200)]
         public IActionResult Days(string day)
         {
-            DateTime[] days = _dateHelper.GetDates(day);
+            DateTime[] days = day.ConvertTo(Convert.ToDateTime);
 
             return Ok(new Response<IEnumerable<HolidayYears>>()
             {
@@ -69,7 +70,7 @@ namespace Snow.Calendar.Web.Controllers
          ProducesResponseType(typeof(Response<IEnumerable<HolidayYears>>), 200)]
         public IActionResult Months(string month)
         {
-            DateTime[] months = _dateHelper.GetDates(month);
+            DateTime[] months = month.ConvertTo(Convert.ToDateTime);
             List<DateTime> days = new List<DateTime>();
             foreach (DateTime m in months)
             {
@@ -97,12 +98,11 @@ namespace Snow.Calendar.Web.Controllers
          ProducesResponseType(typeof(Response<IEnumerable<HolidayYears>>), 200)]
         public IActionResult Years(string year)
         {
-            string[] strMonths = year.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            int[] years = Array.ConvertAll(strMonths, Convert.ToInt32);
+            int[] years = year.ConvertTo(Convert.ToInt32);
             List<DateTime> days = new List<DateTime>();
             foreach (int y in years)
             {
-                days.AddRange(_dateHelper.GetDaysByYear(y));
+                days.AddRange(_dateHelper.GetDatesByYear(y));
             }
             return Ok(new Response<IEnumerable<HolidayYears>>()
             {
@@ -129,81 +129,11 @@ namespace Snow.Calendar.Web.Controllers
                                 {
                                     Day = s3.Day,
                                     Date = s3.ToString("yyyy/MM/dd"),
-                                    DayType = GetDayType(s3)
+                                    DayType = _holidayHelper.GetDayType(s3)
                                 })
                             }
                         )
                 });
-        }
-
-        /// <summary>
-        /// 获取日期类型
-        /// </summary>
-        /// <param name="day">某个日期</param>
-        /// <returns></returns>
-        private DayType GetDayType(DateTime day)
-        {
-            DayOfWeek dayOfWeek = day.DayOfWeek;
-            if (IsHoliday(day))
-            {
-                return DayType.Holiday;
-            }
-
-            if (IsCompensationWork(day))
-            {
-                return DayType.Workday;
-            }
-            if (_resource.RestDay.Contains(dayOfWeek))
-            {
-                return DayType.Weekend;
-            }
-            return DayType.Workday;
-        }
-
-        /// <summary>
-        /// 是否是法定休息日
-        /// </summary>
-        /// <param name="day">某个日期</param>
-        /// <returns></returns>
-        private bool IsHoliday(DateTime day)
-        {
-            int year = day.Year;
-            if (_resource.Holidays.ContainsKey(year))
-            {
-                Dictionary<int, int[]> months = _resource.Holidays[year];
-                int month = day.Month;
-                if (months.ContainsKey(month))
-                {
-                    if (months[month].Contains(day.Day))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 是否是补班
-        /// </summary>
-        /// <param name="day">某个日期</param>
-        /// <returns></returns>
-        private bool IsCompensationWork(DateTime day)
-        {
-            int year = day.Year;
-            if (_resource.Workdays.ContainsKey(year))
-            {
-                Dictionary<int, int[]> months = _resource.Workdays[year];
-                int month = day.Month;
-                if (months.ContainsKey(month))
-                {
-                    if (months[month].Contains(day.Day))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

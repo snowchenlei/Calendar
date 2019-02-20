@@ -59,6 +59,6 @@
     <None Include="wwwroot\lib\bootstrap-select\js\i18n\defaults-zh_CN.min.js" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties Config_4solarHoliday_1json__JSONSchema="http://json.schemastore.org/bower" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties Config_4solarHoliday_1json__JSONSchema="http://json.schemastore.org/bower" Config_4workday_1json__JSONSchema="http://json.schemastore.org/appsscript" /></VisualStudio></ProjectExtensions>
 
 </Project>

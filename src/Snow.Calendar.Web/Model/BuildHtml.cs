@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Internal;
+using NUglify.Helpers;
 using Snow.Calendar.Web.Common;
 
 namespace Snow.Calendar.Web.Model
@@ -34,6 +35,7 @@ namespace Snow.Calendar.Web.Model
     public class BuildHtml : IBuildHtml
     {
         private readonly IDateHelper _dateHelper;
+        private readonly ICalendarDateHelper _calendarDateHelper;
 
         private readonly Dictionary<DayOfWeek, string> OneWeek = new Dictionary<DayOfWeek, string>()
         {
@@ -47,9 +49,11 @@ namespace Snow.Calendar.Web.Model
         };
 
         public BuildHtml(
-            IDateHelper dateHelper)
+            IDateHelper dateHelper,
+            ICalendarDateHelper calendarDateHelper)
         {
             _dateHelper = dateHelper;
+            _calendarDateHelper = calendarDateHelper;
         }
 
         /// <summary>
@@ -77,16 +81,16 @@ namespace Snow.Calendar.Web.Model
         /// <returns></returns>
         public string CreateBody(int year, int month)
         {
-            List<DateTime> days = _dateHelper.GetDatesByMonth(year, month);
-
-            IEnumerable<CalendarDate> dates = _dateHelper.GetCalendarDates(days);
+            IEnumerable<DateTime> days = _dateHelper.GetDatesByMonth(year, month);
+            IEnumerable<CalendarDate> dates = _calendarDateHelper.GetCalendarDates(days);
             StringBuilder sbHtml = new StringBuilder();
             sbHtml.Append("<tr>");
-            foreach (CalendarDate date in dates)
+            var calendarDates = dates as CalendarDate[] ?? dates.ToArray();
+            foreach (CalendarDate date in calendarDates)
             {
                 CanlendarDayInfo canlendarDay = GetCanlendarDay(date);
                 DayOfWeek current = date.CalendarDay.DayOfWeek;
-                if (date == dates.First())
+                if (calendarDates.IndexOf(date) == 0)
                 {
                     for (int i = 0, max = OneWeek.Keys.ToArray().IndexOf(current); i < max; i++)
                     {

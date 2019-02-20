@@ -21,6 +21,7 @@ namespace Snow.Calendar.Web.Controllers
         private readonly ILogger _logger;
         private readonly IBuildHtml _buildHtml;
         private readonly IDateHelper _dateHelper;
+        private readonly ICalendarDateHelper _calendarDateHelper;
 
         //private readonly DateHelper _dateHelper;
         private readonly IMemoryCache _memoryCache;
@@ -28,12 +29,14 @@ namespace Snow.Calendar.Web.Controllers
         public HomeController(IDateHelper dateHelper,
             ILogger<HomeController> logger,
             IBuildHtml buildHtml,
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache
+            , ICalendarDateHelper calendarDateHelper)
         {
             _logger = logger;
             _buildHtml = buildHtml;
             _dateHelper = dateHelper;
             _memoryCache = memoryCache;
+            _calendarDateHelper = calendarDateHelper;
         }
 
         private string[] HolidayDays = {
@@ -76,7 +79,7 @@ namespace Snow.Calendar.Web.Controllers
         public JsonResult GetDay(int year, int month, int day)
         {
             DateTime thisDate = new DateTime(year, month, day);
-            CalendarDate calendarDate = _dateHelper.GetCalendarDate(thisDate);
+            CalendarDate calendarDate = _calendarDateHelper.GetCalendarDate(thisDate);
             string big = calendarDate.CalendarMonth.IsBigMonth ? "大" : "小";
             return Json(new
             {

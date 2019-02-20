@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Snow.Calendar.Web.Common;
+using Snow.Calendar.Web.Common.Extension;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Controllers
@@ -35,7 +36,7 @@ namespace Snow.Calendar.Web.Controllers
         [HttpGet, Route("hours")]
         public IActionResult Hours(string hour)
         {
-            DateTime[] days = _dateHelper.GetDates(hour);
+            DateTime[] days = hour.ConvertTo(Convert.ToDateTime);
 
             List<string> result = new List<string>();
             foreach (DateTime dt in days)

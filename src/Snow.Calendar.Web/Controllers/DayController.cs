@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Snow.Calendar.Web.Common;
+using Snow.Calendar.Web.Common.Extension;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Controllers
@@ -20,18 +21,18 @@ namespace Snow.Calendar.Web.Controllers
     [ApiController]
     public class DayController : ControllerBase
     {
-        private readonly ChineseCalendarInfo _chineseCalendar;
         private readonly IDateHelper _dateHelper;
-        private readonly Resource _resource;
+        private readonly ChineseCalendarInfo _chineseCalendar;
+        private readonly ICalendarDateHelper _calendarDateHelper;
 
         public DayController(
             ChineseCalendarInfo chineseCalendar,
             IDateHelper dateHelper,
-            Resource resource)
+            ICalendarDateHelper calendarDateHelper)
         {
-            _chineseCalendar = chineseCalendar;
             _dateHelper = dateHelper;
-            _resource = resource;
+            _chineseCalendar = chineseCalendar;
+            _calendarDateHelper = calendarDateHelper;
         }
 
         /// <summary>
@@ -48,12 +49,12 @@ namespace Snow.Calendar.Web.Controllers
          ProducesResponseType(typeof(Response<IEnumerable<CalendarDate>>), 200)]
         public IActionResult Days(string day)
         {
-            DateTime[] days = _dateHelper.GetDates(day);
+            DateTime[] days = day.ConvertTo(Convert.ToDateTime);
             return Ok(new Response<IEnumerable<CalendarDate>>()
             {
                 Code = 1,
                 Message = "获取成功",
-                Data = _dateHelper.GetCalendarDates(days)
+                Data = _calendarDateHelper.GetCalendarDates(days)
             });
         }
 
@@ -71,7 +72,7 @@ namespace Snow.Calendar.Web.Controllers
          ProducesResponseType(typeof(Response<IEnumerable<CalendarDate>>), 200)]
         public IActionResult Months(string month)
         {
-            DateTime[] months = _dateHelper.GetDates(month);
+            DateTime[] months = month.ConvertTo(Convert.ToDateTime);
 
             List<DateTime> days = new List<DateTime>();
             foreach (DateTime m in months)
@@ -82,7 +83,7 @@ namespace Snow.Calendar.Web.Controllers
             {
                 Code = 1,
                 Message = "获取成功",
-                Data = _dateHelper.GetCalendarDates(days)
+                Data = _calendarDateHelper.GetCalendarDates(days)
             });
         }
 

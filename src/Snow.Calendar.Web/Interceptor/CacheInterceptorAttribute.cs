@@ -11,11 +11,20 @@ using Newtonsoft.Json;
 
 namespace Snow.Calendar.Web.Interceptor
 {
+    /// <summary>
+    /// 缓存代理类
+    /// </summary>
     public class CacheInterceptorAttribute : AbstractInterceptorAttribute
     {
+        /// <summary>
+        /// 缓存
+        /// </summary>
         [FromContainer]
         public IMemoryCache _memoryCache { get; set; }
 
+        /// <summary>
+        /// 日志
+        /// </summary>
         [FromContainer]
         public ILogger _logger { get; set; }
 

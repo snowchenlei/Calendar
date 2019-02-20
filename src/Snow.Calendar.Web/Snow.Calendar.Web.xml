@@ -771,137 +771,6 @@
             <param name="day">农历日</param>
             <returns>星宿信息</returns>
         </member>
-        <member name="T:Snow.Calendar.Web.Common.IDateHelper">
-            <summary>
-            日期帮助类
-            </summary>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDates(System.String)">
-            <summary>
-            获取日期
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDate(System.String)">
-            <summary>
-            获取日期
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDatesByMonth(System.Int32,System.Int32)">
-            <summary>
-            获取月的日期
-            </summary>
-            <param name="year">年份</param>
-            <param name="month">月份</param>
-            <returns>某年某月的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDaysByYear(System.Int32)">
-            <summary>
-            获取年日期
-            </summary>
-            <param name="year">年份</param>
-            <returns>某年的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
-            <summary>
-            获取节日
-            </summary>
-            <param name="calendarDate">万年历日期</param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
-            <summary>
-            公历日期转万年历日期
-            </summary>
-            <param name="dts">公历日期</param>
-            <returns>万年历日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetCalendarDate(System.DateTime)">
-            <summary>
-            公历日期转万年历日期
-            </summary>
-            <param name="dt">公历日期</param>
-            <returns>万年历日期</returns>
-        </member>
-        <member name="T:Snow.Calendar.Web.Common.DateHelper">
-            <summary>
-            日期帮助类
-            </summary>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDates(System.String)">
-            <summary>
-            获取日期
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDate(System.String)">
-            <summary>
-            获取日期
-            </summary>
-            <param name="str"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDaysByYear(System.Int32)">
-            <summary>
-            获取年日期
-            </summary>
-            <param name="year">年份</param>
-            <returns>某年的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDatesByMonth(System.Int32,System.Int32)">
-            <summary>
-            获取月的日期
-            </summary>
-            <param name="year">年份</param>
-            <param name="month">月份</param>
-            <returns>某年某月的所有日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
-            <summary>
-            公历日期转万年历日期
-            </summary>
-            <param name="dts">公历日期</param>
-            <returns>万年历日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetCalendarDate(System.DateTime)">
-            <summary>
-            公历日期转万年历日期
-            </summary>
-            <param name="dt">公历日期</param>
-            <returns>万年历日期</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
-            <summary>
-            获取节日
-            </summary>
-            <param name="calendarDate">万年历日期</param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDayType(System.DateTime)">
-            <summary>
-            获取日期类型
-            </summary>
-            <param name="day">某个日期</param>
-            <returns>日期类型</returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.IsHoliday(System.DateTime)">
-            <summary>
-            是否是法定休息日
-            </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.DateHelper.IsCompensationWork(System.DateTime)">
-            <summary>
-            是否是补班
-            </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
-        </member>
         <member name="T:Snow.Calendar.Web.Common.ExceptionHandlerMiddleWare">
             <summary>
             异常处理中间件
@@ -913,6 +782,20 @@
             </summary>
             <param name="o"></param>
             <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.Extension.StringExtension">
+            <summary>
+            字符串扩展类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.Extension.StringExtension.ConvertTo``1(System.String,System.Converter{System.String,``0})">
+            <summary>
+            字符串强转数组
+            </summary>
+            <typeparam name="T">目标类型</typeparam>
+            <param name="str">调用源</param>
+            <param name="converter">转换逻辑</param>
+            <returns>目标类型数组</returns>
         </member>
         <member name="T:Snow.Calendar.Web.Common.Resource">
             <summary>
@@ -962,6 +845,159 @@
             <summary>
             双休日
             </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.ICalendarDateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dts">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.ICalendarDateHelper.GetCalendarDate(System.DateTime)">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dt">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.CalendarDateHelper">
+            <summary>
+            万年历日期类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.CalendarDateHelper.GetCalendarDates(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dts">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.CalendarDateHelper.GetCalendarDate(System.DateTime)">
+            <summary>
+            公历日期转万年历日期
+            </summary>
+            <param name="dt">公历日期</param>
+            <returns>万年历日期</returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.IDateHelper">
+            <summary>
+            日期帮助类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDate(System.String)">
+            <summary>
+            获取日期
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDatesByMonth(System.Int32,System.Int32)">
+            <summary>
+            获取月的日期
+            </summary>
+            <param name="year">年份</param>
+            <param name="month">月份</param>
+            <returns>某年某月的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetDatesByYear(System.Int32)">
+            <summary>
+            获取年日期
+            </summary>
+            <param name="year">年份</param>
+            <returns>某年的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取节日
+            </summary>
+            <param name="calendarDate">万年历日期</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.DateHelper">
+            <summary>
+            日期帮助类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDate(System.String)">
+            <summary>
+            获取日期
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDatesByYear(System.Int32)">
+            <summary>
+            获取年日期
+            </summary>
+            <param name="year">年份</param>
+            <returns>某年的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetDatesByMonth(System.Int32,System.Int32)">
+            <summary>
+            获取月的日期
+            </summary>
+            <param name="year">年份</param>
+            <param name="month">月份</param>
+            <returns>某年某月的所有日期</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DateHelper.GetHoliday(Snow.Calendar.Web.Model.CalendarDate)">
+            <summary>
+            获取节日
+            </summary>
+            <param name="calendarDate">万年历日期</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.IHolidayHelper">
+            <summary>
+            节假日帮助接口
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.GetDayType(System.DateTime)">
+            <summary>
+            获取日期类型
+            </summary>
+            <param name="day">某个日期</param>
+            <returns>日期类型</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.IsHoliday(System.DateTime)">
+            <summary>
+            是否是法定休息日
+            </summary>
+            <param name="day">某个日期</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.IsCompensationWork(System.DateTime)">
+            <summary>
+            是否是补班
+            </summary>
+            <param name="day">某个日期</param>
+            <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.HolidayHelper">
+            <summary>
+            节假日帮助类
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.GetDayType(System.DateTime)">
+            <summary>
+            获取日期类型
+            </summary>
+            <param name="day">某个日期</param>
+            <returns>日期类型</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.IsHoliday(System.DateTime)">
+            <summary>
+            是否是法定休息日
+            </summary>
+            <param name="day">某个日期</param>
+            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.IsCompensationWork(System.DateTime)">
+            <summary>
+            是否是补班
+            </summary>
+            <param name="day">某个日期</param>
+            <returns></returns>
         </member>
         <member name="T:Snow.Calendar.Web.Common.SolarTerm">
             <summary>
@@ -1127,27 +1163,6 @@
             <response code="200">获取成功</response>
             <returns></returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Controllers.HolidayController.GetDayType(System.DateTime)">
-            <summary>
-            获取日期类型
-            </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Controllers.HolidayController.IsHoliday(System.DateTime)">
-            <summary>
-            是否是法定休息日
-            </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
-        </member>
-        <member name="M:Snow.Calendar.Web.Controllers.HolidayController.IsCompensationWork(System.DateTime)">
-            <summary>
-            是否是补班
-            </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
-        </member>
         <member name="T:Snow.Calendar.Web.Controllers.HomeController">
             <summary>
             主控制器
@@ -1193,6 +1208,21 @@
             </summary>
             <param name="hour">,分割的时间串</param>
             <returns></returns>
+        </member>
+        <member name="T:Snow.Calendar.Web.Interceptor.CacheInterceptorAttribute">
+            <summary>
+            缓存代理类
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Interceptor.CacheInterceptorAttribute._memoryCache">
+            <summary>
+            缓存
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Interceptor.CacheInterceptorAttribute._logger">
+            <summary>
+            日志
+            </summary>
         </member>
         <member name="T:Snow.Calendar.Web.Model.IBuildHtml">
             <summary>

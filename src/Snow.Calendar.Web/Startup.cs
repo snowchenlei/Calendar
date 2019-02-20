@@ -44,6 +44,8 @@ namespace Snow.Calendar.Web
             services.AddTransient<IDateHelper, DateHelper>();
             services.AddTransient<SolarTerm>();
             services.AddTransient<IBuildHtml, BuildHtml>();
+            services.AddTransient<ICalendarDateHelper, CalendarDateHelper>();
+            services.AddTransient<IHolidayHelper, HolidayHelper>();
             services.AddTransient<Constellation>();
 
             services.AddMemoryCache();
