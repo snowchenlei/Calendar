@@ -13,95 +13,13 @@ namespace Snow.Calendar.Web.Common
     /// </summary>
     public class SolarTerm
     {
+        private const double D = 0.2422;
         private readonly SolarModel[] _solarModels;
-        private readonly Resource _resource;
 
         public SolarTerm(Resource resource)
         {
-            _resource = resource;
             _solarModels = resource.SolarTerms;
         }
-
-        #region 准备数据
-
-        /// <summary>
-        /// 24节气
-        /// </summary>
-        private static readonly string[] SolarTerms = {
-            "小寒", "大寒", "立春", "雨水", "惊蛰", "春分",
-            "清明", "谷雨", "立夏", "小满", "芒种", "夏至",
-            "小暑", "大暑", "立秋", "处暑", "白露", "秋分",
-            "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"
-        };
-
-        /// <summary>
-        /// 节气所在月
-        /// </summary>
-        /// <remarks>
-        /// 与SolarTerm索引对应
-        /// </remarks>
-        private static readonly int[] SolarMonth = {
-            1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12
-        };
-
-        private const double D = 0.2422;
-
-        /// <summary>
-        /// 正向偏移值(+1)
-        /// </summary>
-        private readonly Dictionary<int, int[]> INCREASE_OFFSETMAP = new Dictionary<int, int[]>()
-        {
-            [0] = new int[] { 1982 },
-            [1] = new int[] { 2082 },
-            [5] = new int[] { 2084 },
-            [9] = new int[] { 2008 },
-            [10] = new int[] { 1902 },
-            [11] = new int[] { 1928 },
-            [12] = new int[] { 1925, 2016 },
-            [13] = new int[] { 1922 },
-            [14] = new int[] { 2002 },
-            [16] = new int[] { 1927 },
-            [17] = new int[] { 1942 },
-            [19] = new int[] { 2089 },
-            [20] = new int[] { 2089 },
-            [21] = new int[] { 1978 },
-            [22] = new int[] { 1954 },
-        };
-
-        /// <summary>
-        /// 负向偏移值(-1)
-        /// </summary>
-        private readonly Dictionary<int, int[]> DECREASE_OFFSETMAP = new Dictionary<int, int[]>()
-        {
-            [0] = new int[] { 2019 },
-            [3] = new int[] { 2026 },
-            [23] = new int[] { 1918, 2021 },
-        };
-
-        /// <summary>
-        /// 节气值
-        /// </summary>
-        /// <remarks>
-        /// 定义一个二维数组，第一维数组存储的是20世纪的节气C值，第二维数组存储的是21世纪的节气C值,0到23个，
-        /// 与SolarTerm索引对应
-        /// </remarks>
-        private double[,] CENTURY_ARRAY = {
-            { 6.11, 20.84, 4.6295, 19.4599, 6.3826, 21.4155, 5.59, 20.888, 6.318, 21.86, 6.5, 22.2, 7.928, 23.65, 8.35, 23.95, 8.44,
-                23.822, 9.098, 24.218, 8.218, 23.08, 7.9, 22.6 },
-            { 5.4055, 20.12, 3.87, 18.73, 5.63, 20.646, 4.81, 20.1, 5.52, 21.04, 5.678, 21.37, 7.108, 22.83, 7.5, 23.13, 7.646,
-                23.042, 8.318, 23.438, 7.438, 22.36, 7.18, 21.94 } };
-
-        private static int[] sTermInfo = new int[]
-        {
-            0, 21208, 42467, 63836, 85337, 107014, 128867, 150921,
-            173149, 195551, 218072, 240693, 263343, 285989, 308563,
-            331033, 353350, 375494, 397447, 419210, 440795, 462224,
-            483532, 504758
-        };
-
-        #endregion 准备数据
-
-        public Dictionary<DateTime, string> _chineseTwentyFours;
 
         #region 24节气
 

@@ -222,6 +222,11 @@ namespace Snow.Calendar.Web.Model
         public KeyValuePair<string, string> SolarHoliday { get; set; }
 
         /// <summary>
+        /// 按某月第几周第几日计算的节日
+        /// </summary>
+        public string WeekDayHoliday { get; set; }
+
+        /// <summary>
         /// 农历年中第几周
         /// </summary>
         public int LunarWeekOfYear { get; set; }

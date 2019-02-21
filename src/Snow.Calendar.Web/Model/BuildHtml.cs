@@ -34,24 +34,27 @@ namespace Snow.Calendar.Web.Model
     /// </summary>
     public class BuildHtml : IBuildHtml
     {
+        private readonly Resource _resource;
         private readonly IDateHelper _dateHelper;
         private readonly ICalendarDateHelper _calendarDateHelper;
 
-        private readonly Dictionary<DayOfWeek, string> OneWeek = new Dictionary<DayOfWeek, string>()
-        {
-            [DayOfWeek.Sunday] = "星期日",
-            [DayOfWeek.Monday] = "星期一",
-            [DayOfWeek.Tuesday] = "星期二",
-            [DayOfWeek.Wednesday] = "星期三",
-            [DayOfWeek.Thursday] = "星期四",
-            [DayOfWeek.Friday] = "星期五",
-            [DayOfWeek.Saturday] = "星期六",
-        };
+        //private readonly Dictionary<DayOfWeek, string> OneWeek = new Dictionary<DayOfWeek, string>()
+        //{
+        //    [DayOfWeek.Monday] = "星期一",
+        //    [DayOfWeek.Tuesday] = "星期二",
+        //    [DayOfWeek.Wednesday] = "星期三",
+        //    [DayOfWeek.Thursday] = "星期四",
+        //    [DayOfWeek.Friday] = "星期五",
+        //    [DayOfWeek.Saturday] = "星期六",
+        //    [DayOfWeek.Sunday] = "星期日",
+        //};
 
         public BuildHtml(
+            Resource resource,
             IDateHelper dateHelper,
             ICalendarDateHelper calendarDateHelper)
         {
+            _resource = resource;
             _dateHelper = dateHelper;
             _calendarDateHelper = calendarDateHelper;
         }
@@ -64,7 +67,7 @@ namespace Snow.Calendar.Web.Model
         {
             StringBuilder sbHtml = new StringBuilder();
             sbHtml.Append("<tr>");
-            foreach (string dayOfWeek in OneWeek.Values)
+            foreach (string dayOfWeek in _resource.OneWeek.Values)
             {
                 sbHtml.Append("<td class='thead'>" + dayOfWeek + "</td>");
             }
@@ -92,7 +95,7 @@ namespace Snow.Calendar.Web.Model
                 DayOfWeek current = date.CalendarDay.DayOfWeek;
                 if (calendarDates.IndexOf(date) == 0)
                 {
-                    for (int i = 0, max = OneWeek.Keys.ToArray().IndexOf(current); i < max; i++)
+                    for (int i = 0, max = _resource.OneWeek.Keys.ToArray().IndexOf(current); i < max; i++)
                     {
                         sbHtml.Append("<td style='height: 16%;' class='block'></td>");
                     }
@@ -118,7 +121,7 @@ namespace Snow.Calendar.Web.Model
                 //sbHtml.AppendFormat("<div class='lnumber'>{0}</div>", canlendarDay.LunarDayText);
                 sbHtml.AppendFormat(canlendarDay.LunarDayText);
                 sbHtml.Append("</div></a></td>");
-                if (current == OneWeek.Last().Key)
+                if (current == _resource.OneWeek.Last().Key)
                 {
                     sbHtml.Append("</tr><tr>");
                 }
@@ -163,6 +166,10 @@ namespace Snow.Calendar.Web.Model
             else if (!String.IsNullOrEmpty(calendarDate.CalendarDay.SolarHoliday.Key))
             {
                 subhead = $"<div class='lnumber txtOver' style='color:#BC5016;' title='{calendarDate.CalendarDay.SolarHoliday.Value}'>{calendarDate.CalendarDay.SolarHoliday.Key}</div>";
+            }
+            else if (!String.IsNullOrEmpty(calendarDate.CalendarDay.WeekDayHoliday))
+            {
+                subhead = $"<div class='lnumber txtOver' style='color:#BC5016;' title='{calendarDate.CalendarDay.WeekDayHoliday}'>{calendarDate.CalendarDay.WeekDayHoliday}</div>";
             }
             else if (calendarDate.CalendarDay.LunarDay == 1)
             {

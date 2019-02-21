@@ -122,6 +122,13 @@ namespace Snow.Calendar.Web.Common
         /// </summary>
         private const string TerrestrialBranch = "子丑寅卯辰巳午未申酉戌亥";
 
+        private const string s = "水土木木土火火土金金土水";
+
+        /// <summary>
+        /// 属相
+        /// </summary>
+        private const string Animals = "鼠牛虎兔龙蛇马羊猴鸡狗猪";
+
         private static readonly string[] ChineseWeekName = new string[]
             { "星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
 
@@ -132,6 +139,104 @@ namespace Snow.Calendar.Web.Common
 
         private static readonly string[] ChineseMonthName = new string[]
             { "正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "腊" };
+
+        /// <summary>
+        /// 24节气
+        /// </summary>
+        private static readonly string[] SolarTerm = {
+            "小寒", "大寒", "立春", "雨水", "惊蛰", "春分",
+            "清明", "谷雨", "立夏", "小满", "芒种", "夏至",
+            "小暑", "大暑", "立秋", "处暑", "白露", "秋分",
+            "寒露", "霜降", "立冬", "小雪", "大雪", "冬至"
+        };
+
+        /// <summary>
+        /// 节气所在月
+        /// </summary>
+        /// <remarks>
+        /// 与SolarTerm索引对应
+        /// </remarks>
+        private static readonly int[] SolarMonth = {
+            1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12
+        };
+
+        private const double D = 0.2422;
+
+        /// <summary>
+        /// 正向偏移值(+1)
+        /// </summary>
+        private readonly Dictionary<int, int[]> INCREASE_OFFSETMAP = new Dictionary<int, int[]>()
+        {
+            [0] = new int[] { 1982 },
+            [1] = new int[] { 2082 },
+            [5] = new int[] { 2084 },
+            [9] = new int[] { 2008 },
+            [10] = new int[] { 1902 },
+            [11] = new int[] { 1928 },
+            [12] = new int[] { 1925, 2016 },
+            [13] = new int[] { 1922 },
+            [14] = new int[] { 2002 },
+            [16] = new int[] { 1927 },
+            [17] = new int[] { 1942 },
+            [19] = new int[] { 2089 },
+            [20] = new int[] { 2089 },
+            [21] = new int[] { 1978 },
+            [22] = new int[] { 1954 },
+        };
+
+        /// <summary>
+        /// 负向偏移值(-1)
+        /// </summary>
+        private readonly Dictionary<int, int[]> DECREASE_OFFSETMAP = new Dictionary<int, int[]>()
+        {
+            [0] = new int[] { 2019 },
+            [3] = new int[] { 2026 },
+            [23] = new int[] { 1918, 2021 },
+        };
+
+        /// <summary>
+        /// 节气值
+        /// </summary>
+        /// <remarks>
+        /// 定义一个二维数组，第一维数组存储的是20世纪的节气C值，第二维数组存储的是21世纪的节气C值,0到23个，
+        /// 与SolarTerm索引对应
+        /// </remarks>
+        private double[,] CENTURY_ARRAY = {
+            { 6.11, 20.84, 4.6295, 19.4599, 6.3826, 21.4155, 5.59, 20.888, 6.318, 21.86, 6.5, 22.2, 7.928, 23.65, 8.35, 23.95, 8.44,
+                23.822, 9.098, 24.218, 8.218, 23.08, 7.9, 22.6 },
+            { 5.4055, 20.12, 3.87, 18.73, 5.63, 20.646, 4.81, 20.1, 5.52, 21.04, 5.678, 21.37, 7.108, 22.83, 7.5, 23.13, 7.646,
+                23.042, 8.318, 23.438, 7.438, 22.36, 7.18, 21.94 } };
+
+        private static int[] sTermInfo = new int[]
+        {
+            0, 21208, 42467, 63836, 85337, 107014, 128867, 150921,
+            173149, 195551, 218072, 240693, 263343, 285989, 308563,
+            331033, 353350, 375494, 397447, 419210, 440795, 462224,
+            483532, 504758
+        };
+
+        private static readonly string[] Constellations = new string[]
+        {
+            "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座",
+            "天秤座", "天蝎座", "射手座", "摩羯座", "水瓶座", "双鱼座"
+        };
+
+        private static readonly string[] Palaces = new string[]
+        {
+            "始宫", "续宫", "果宫"
+        };
+
+        private static readonly string[] Planets = new string[]
+        {
+            "火星", "金星", "水星", "月亮", "太阳", "水星",
+            "金星", "火星", "木星", "土星", "天王星&土星", "木星&海王星"
+        };
+
+        private static readonly string[] BirthStones = new string[]
+        {
+            "钻石", "蓝宝石", "玛瑙", "珍珠", "红宝石", "红条纹玛瑙",
+            "蓝宝石", "猫眼石", "黄宝石", "土耳其玉", "紫水晶", "月长石，血石"
+        };
 
         #endregion 基础数据
 
@@ -298,6 +403,26 @@ namespace Snow.Calendar.Web.Common
         /// 星期几
         /// </summary>
         public string SolarWeekText => ChineseWeekName[(int)SolarWeek];
+
+        /// <summary>
+        /// 阳历星座
+        /// </summary>
+        public string SolarConstellation { get; private set; }
+
+        /// <summary>
+        /// 阳历诞生石
+        /// </summary>
+        public string SolarBirthStone { get; private set; }
+
+        /// <summary>
+        /// 星宫
+        /// </summary>
+        public string SolarPalace { get; private set; }
+
+        /// <summary>
+        /// 行星
+        /// </summary>
+        public string SolarPlanet { get; private set; }
 
         /// <summary>
         /// 阴历年份
@@ -515,6 +640,117 @@ namespace Snow.Calendar.Web.Common
 
         public string LunarHourText => TerrestrialBranch[LunarHourBranch].ToString();
 
+        /// <summary>
+        /// 阴历年生肖
+        /// </summary>
+        public string LunarYearAnimal
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(m_LunarYearAnimal))
+                {
+                    int y = calendar.GetSexagenaryYear(this.SolarDate);
+                    m_LunarYearAnimal = Animals.Substring((y - 1) % 12, 1);
+                }
+                return m_LunarYearAnimal;
+            }
+        }
+
+        /// <summary>
+        /// 按公历日计算的节日
+        /// </summary>
+        public KeyValuePair<string, string> SolarHoliday
+        {
+            get
+            {
+                //string tempStr = String.Empty;
+                //TODO:Where
+                KeyValuePair<string, string> tempStr = _resource.SolarHoliday
+                    .Where(s => s.Month == SolarDate.Month && s.Day == SolarDate.Day)
+                    .Select(s => new KeyValuePair<string, string>(s.HolidayName, s.HolidayAll))
+                    .FirstOrDefault();
+                //SolarHoliday[] ss = _resource.SolarHoliday;//.Where(a => a.)
+                //foreach (SolarHoliday sh in _resource.SolarHoliday)
+                //{
+                //    if ((sh.CalendarMonth == SolarDate.CalendarMonth) && (sh.CalendarDay == SolarDate.CalendarDay))
+                //    {
+                //        tempStr = sh.HolidayName;
+                //        break;
+                //    }
+                //}
+                //foreach (SolarHolidayStruct sh in sHolidayInfo)
+                //{
+                //    if ((sh.CalendarMonth == SolarDate.CalendarMonth) && (sh.CalendarDay == SolarDate.CalendarDay))
+                //    {
+                //        tempStr = sh.HolidayName;
+                //        break;
+                //    }
+                //}
+                return tempStr;
+            }
+        }
+
+        /// <summary>
+        /// 计算中国农历节日
+        /// </summary>
+        public KeyValuePair<string, string> LunarHoliday
+        {
+            get
+            {
+                KeyValuePair<string, string> tempStr = new KeyValuePair<string, string>();// = String.Empty;
+                if (IsLeapLunarMonth == false) //闰月不计算节日
+                {
+                    if (_resource.LunarHoliday.Any(l => l.Month == LunarMonth && l.Day == LunarDay))
+                    {
+                        tempStr = _resource.LunarHoliday.Where(l => l.Month == LunarMonth && l.Day == LunarDay)
+                            .Select(l => new KeyValuePair<string, string>(l.HolidayName, l.HolidayAll))
+                            .FirstOrDefault();
+                    }
+                    else
+                    {
+                        //对除夕进行特别处理
+                        if (this.LunarMonth == 12)
+                        {
+                            int i = calendar.GetDaysInMonth(LunarYear, LunarMonth);//计算当年农历12月的总天数
+                            if (this.LunarDay == i) //如果为最后一天
+                            {
+                                tempStr = new KeyValuePair<string, string>("除夕", "除夕");
+                            }
+                        }
+                    }
+                    //foreach (LunarHoliday lh in _resource.LunarHoliday)
+                    //{
+                    //    if ((lh.CalendarMonth == this.LunarMonth) && (lh.CalendarDay == this.LunarDay))
+                    //    {
+                    //        tempStr = lh.HolidayName;
+                    //        break;
+                    //    }
+                    //}
+                }
+                return tempStr;
+            }
+        }
+
+        /// <summary>
+        /// 按某月第几周第几日计算的节日
+        /// </summary>
+        public string WeekDayHoliday
+        {
+            get
+            {
+                string tempStr = String.Empty;
+                foreach (WeekHoliday wh in _resource.WeekHoliday)
+                {
+                    if (CompareWeekDayHoliday(SolarDate, wh.Month, wh.WeekAtMonth, wh.WeekDay))
+                    {
+                        tempStr = wh.HolidayName;
+                        break;
+                    }
+                }
+                return tempStr;
+            }
+        }
+
         #endregion 日历属性
 
         /// <summary>
@@ -555,10 +791,10 @@ namespace Snow.Calendar.Web.Common
             {
                 return;
             }
-            //SolarConstellation = Constellations[j];
-            //SolarBirthStone = BirthStones[j];
-            //SolarPalace = Palaces[j % 3];
-            //SolarPlanet = Planets[j];
+            SolarConstellation = Constellations[j];
+            SolarBirthStone = BirthStones[j];
+            SolarPalace = Palaces[j % 3];
+            SolarPlanet = Planets[j];
 
             #region 星座划分
 

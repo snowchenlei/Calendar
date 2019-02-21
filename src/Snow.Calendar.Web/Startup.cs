@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -43,10 +44,12 @@ namespace Snow.Calendar.Web
             services.AddTransient<ChineseCalendarInfo>();
             services.AddTransient<IDateHelper, DateHelper>();
             services.AddTransient<SolarTerm>();
+            services.AddTransient<IDayHelper, DayHelper>();
             services.AddTransient<IBuildHtml, BuildHtml>();
             services.AddTransient<ICalendarDateHelper, CalendarDateHelper>();
             services.AddTransient<IHolidayHelper, HolidayHelper>();
             services.AddTransient<Constellation>();
+            services.AddTransient<ChineseLunisolarCalendar, ChineseLunisolarCalendar>();
 
             services.AddMemoryCache();
 

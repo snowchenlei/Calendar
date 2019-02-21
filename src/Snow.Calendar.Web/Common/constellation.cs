@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Snow.Calendar.Web.Model;
@@ -11,16 +12,12 @@ namespace Snow.Calendar.Web.Common
     /// </summary>
     public class Constellation
     {
-        private static string[] ConstellationName =
-        {
-            //四      五        六       日        一       二        三
-            "角木蛟", "亢金龙", "氐土貉", "房日兔", "心月狐", "尾火虎", "箕水豹",
-            "斗木獬", "牛金牛", "女土蝠", "虚日鼠", "危月燕", "室火猪", "壁水獝",
-            "奎木狼", "娄金狗", "胃土彘", "昴日鸡", "毕月乌", "觜火猴", "参水猿",
-            "井木犴", "鬼金羊", "柳土獐", "星日马", "张月鹿", "翼火蛇", "轸水蚓"
-        };
+        private const string Animals = "鼠牛虎兔龙蛇马羊猴鸡狗猪";
 
-        private ConstellationModel[,] Constellations =
+        /// <summary>
+        /// 星宿
+        /// </summary>
+        private ConstellationModel[,] Starts =
         {
             {
                 new ConstellationModel(){ConstellationName = "室宿", ConstellationValue = "室火猪"},
@@ -409,14 +406,131 @@ namespace Snow.Calendar.Web.Common
         };
 
         /// <summary>
+        /// 星座
+        /// </summary>
+        private static readonly string[] Constellations = new[]
+        {
+            "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座",
+            "天秤座", "天蝎座", "射手座", "摩羯座", "水瓶座", "双鱼座"
+        };
+
+        /// <summary>
+        /// 诞生石
+        /// </summary>
+        private static readonly string[] BirthStones = new[]
+        {
+            "钻石", "蓝宝石", "玛瑙", "珍珠", "红宝石", "红条纹玛瑙",
+            "蓝宝石", "猫眼石", "黄宝石", "土耳其玉", "紫水晶", "月长石，血石"
+        };
+
+        /// <summary>
+        /// 星宫
+        /// </summary>
+        private static readonly string[] Palaces = new[]
+        {
+            "始宫", "续宫", "果宫"
+        };
+
+        /// <summary>
+        /// 行星
+        /// </summary>
+        private static readonly string[] Planets = new[]
+        {
+            "火星", "金星", "水星", "月亮", "太阳", "水星",
+            "金星", "火星", "木星", "土星", "天王星&土星", "木星&海王星"
+        };
+
+        private readonly ChineseLunisolarCalendar _chineseLunisolarCalendar;
+
+        public Constellation(
+            ChineseLunisolarCalendar chineseLunisolarCalendar)
+        {
+            _chineseLunisolarCalendar = chineseLunisolarCalendar;
+        }
+
+        /// <summary>
+        /// 阴历年生肖
+        /// </summary>
+        public string GetLunarYearAnimal(DateTime time)
+        {
+            int y = _chineseLunisolarCalendar.GetSexagenaryYear(time);
+            return Animals.Substring((y - 1) % 12, 1);
+        }
+
+        /// <summary>
         /// 获取星宿描述
         /// </summary>
         /// <param name="month">农历月</param>
         /// <param name="day">农历日</param>
         /// <returns>星宿信息</returns>
-        public ConstellationModel GetConstellation(int month, int day)
+        public ConstellationModel GetStart(int month, int day)
         {
-            return Constellations[month, day];
+            return Starts[month, day];
+        }
+
+        /// <summary>
+        /// 根据指定阳历日期计算星座＆诞生石
+        /// </summary>
+        /// <param name="date">指定阳历日期</param>
+        /// <param name="constellation">星座</param>
+        /// <param name="birthstone">诞生石</param>
+        public ConstellationInfo GetConstellation(DateTime date)
+        {
+            int i = Convert.ToInt32(date.ToString("MMdd"));
+            int j;
+            if (i >= 321 && i <= 419)
+                j = 0;
+            else if (i >= 420 && i <= 520)
+                j = 1;
+            else if (i >= 521 && i <= 621)
+                j = 2;
+            else if (i >= 622 && i <= 722)
+                j = 3;
+            else if (i >= 723 && i <= 822)
+                j = 4;
+            else if (i >= 823 && i <= 922)
+                j = 5;
+            else if (i >= 923 && i <= 1023)
+                j = 6;
+            else if (i >= 1024 && i <= 1121)
+                j = 7;
+            else if (i >= 1122 && i <= 1221)
+                j = 8;
+            else if (i >= 1222 || i <= 119)
+                j = 9;
+            else if (i >= 120 && i <= 218)
+                j = 10;
+            else if (i >= 219 && i <= 320)
+                j = 11;
+            else
+            {
+                return new ConstellationInfo();
+            }
+
+            return new ConstellationInfo()
+            {
+                SolarConstellation = Constellations[j],
+                SolarBirthStone = BirthStones[j],
+                SolarPalace = Palaces[j % 3],
+                SolarPlanet = Planets[j]
+            };
+
+            #region 星座划分
+
+            //白羊座：   3月21日------4月19日     诞生石：   钻石
+            //金牛座：   4月20日------5月20日   诞生石：   蓝宝石
+            //双子座：   5月21日------6月21日     诞生石：   玛瑙
+            //巨蟹座：   6月22日------7月22日   诞生石：   珍珠
+            //狮子座：   7月23日------8月22日   诞生石：   红宝石
+            //处女座：   8月23日------9月22日   诞生石：   红条纹玛瑙
+            //天秤座：   9月23日------10月23日     诞生石：   蓝宝石
+            //天蝎座：   10月24日-----11月21日     诞生石：   猫眼石
+            //射手座：   11月22日-----12月21日   诞生石：   黄宝石
+            //摩羯座：   12月22日-----1月19日   诞生石：   土耳其玉
+            //水瓶座：   1月20日-----2月18日   诞生石：   紫水晶
+            //双鱼座：   2月19日------3月20日   诞生石：   月长石，血石
+
+            #endregion 星座划分
         }
     }
 }

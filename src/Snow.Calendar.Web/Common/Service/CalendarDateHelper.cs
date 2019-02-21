@@ -69,6 +69,7 @@ namespace Snow.Calendar.Web.Common
         public CalendarDate GetCalendarDate(DateTime dt)
         {
             _chineseCalendar.SolarDate = dt;
+            ConstellationInfo constellation = _constellation.GetConstellation(dt);
             CalendarDate calendarDate = new CalendarDate()
             {
                 CurrentDate = dt.ToString("D"),
@@ -80,8 +81,8 @@ namespace Snow.Calendar.Web.Common
                     LunarYearText = _chineseCalendar.LunarYearText,
                     LunarYearLeapMonth = _chineseCalendar.LunarYearLeapMonth,
                     IsLeapLunarYear = _chineseCalendar.IsLeapLunarYear,
-                    LunarYearAnimal = _chineseCalendar.LunarYearAnimal,
-                    SolarBirthStone = _chineseCalendar.SolarBirthStone,
+                    LunarYearAnimal = _constellation.GetLunarYearAnimal(dt), //_chineseCalendar.LunarYearAnimal,
+                    SolarBirthStone = constellation.SolarBirthStone, //_chineseCalendar.SolarBirthStone,
                     LunarYearSexagenary = _chineseCalendar.LunarYearSexagenary,
                     LunarYearNaYinFiveElements = _chineseCalendar.LunarYearNaYinFiveElements,
                 },
@@ -107,14 +108,15 @@ namespace Snow.Calendar.Web.Common
                     //WeekDayHoliday = _chineseCalendar.WeekDayHoliday,
                     //Holiday = String.Join('/', _chineseCalendar.LunarHoliday, _chineseCalendar.SolarHoliday,
                     //    _chineseCalendar.WeekDayHoliday).Trim('/'),
-                    LunarHoliday = _chineseCalendar.LunarHoliday,
-                    SolarHoliday = _chineseCalendar.SolarHoliday,
+                    LunarHoliday = _holidayHelper.GetLunarHoliday(_chineseCalendar),// _chineseCalendar.LunarHoliday,
+                    SolarHoliday = _holidayHelper.GetSolarHoliday(dt),//_chineseCalendar.SolarHoliday,
+                    WeekDayHoliday = _holidayHelper.GetWeekDayHoliday(dt),//_chineseCalendar.WeekDayHoliday,
                     SolarTerm = _solarTerm.GetSolarTerm(dt),// _chineseCalendar.SolarTerm,
                     SolarTermDays = _solarTerm.GetSolarTermDays(dt),// _chineseCalendar.SolarTermDays,
-                    LunarConstellation = _constellation.GetConstellation(_chineseCalendar.LunarMonth - 1, _chineseCalendar.LunarDay - 1).ToString(),//_chineseCalendar.LunarConstellation,
-                    SolarConstellation = _chineseCalendar.SolarConstellation,
-                    SolarPalace = _chineseCalendar.SolarPalace,
-                    SolarPlanet = _chineseCalendar.SolarPlanet,
+                    LunarConstellation = _constellation.GetStart(_chineseCalendar.LunarMonth - 1, _chineseCalendar.LunarDay - 1).ToString(),//_chineseCalendar.LunarConstellation,
+                    SolarConstellation = constellation.SolarConstellation, //_chineseCalendar.SolarConstellation,
+                    SolarPalace = constellation.SolarPalace, //_chineseCalendar.SolarPalace,
+                    SolarPlanet = constellation.SolarPlanet, //_chineseCalendar.SolarPlanet,
                     DayOfWeek = _chineseCalendar.DayOfWeek,
                     DayOfWeekText = dt.ToString("ddd"),
                     DayOfYear = _chineseCalendar.DayOfYear,

@@ -116,6 +116,10 @@ namespace Snow.Calendar.Web.Common
                 holidays.AddRange(calendarDate.CalendarDay.SolarHoliday.Value?.Split(' '));
             }
 
+            if (!String.IsNullOrEmpty(calendarDate.CalendarDay.WeekDayHoliday))
+            {
+                holidays.Add(calendarDate.CalendarDay.WeekDayHoliday);
+            }
             if (holidays.Any())
             {
                 holidays = holidays.Where(s => !String.IsNullOrEmpty(s)).ToList();

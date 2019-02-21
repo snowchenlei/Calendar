@@ -40,43 +40,6 @@
             地支
             </summary>
         </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.Animals">
-            <summary>
-            属相
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarTerm">
-            <summary>
-            24节气
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarMonth">
-            <summary>
-            节气所在月
-            </summary>
-            <remarks>
-            与SolarTerm索引对应
-            </remarks>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.INCREASE_OFFSETMAP">
-            <summary>
-            正向偏移值(+1)
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.DECREASE_OFFSETMAP">
-            <summary>
-            负向偏移值(-1)
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.ChineseCalendarInfo.CENTURY_ARRAY">
-            <summary>
-            节气值
-            </summary>
-            <remarks>
-            定义一个二维数组，第一维数组存储的是20世纪的节气C值，第二维数组存储的是21世纪的节气C值,0到23个，
-            与SolarTerm索引对应
-            </remarks>
-        </member>
         <member name="M:Snow.Calendar.Web.Common.ChineseCalendarInfo.#ctor(System.DateTime,Snow.Calendar.Web.Common.Resource)">
             <summary>
             从指定的阳历日期创建中国日历信息实体类
@@ -113,26 +76,6 @@
         <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarWeekText">
             <summary>
             星期几
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarConstellation">
-            <summary>
-            阳历星座
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarBirthStone">
-            <summary>
-            阳历诞生石
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarPalace">
-            <summary>
-            星宫
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarPlanet">
-            <summary>
-            行星
             </summary>
         </member>
         <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.LunarYear">
@@ -245,55 +188,13 @@
             时辰
             </summary>
         </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.LunarYearAnimal">
+        <member name="M:Snow.Calendar.Web.Common.ChineseCalendarInfo.CalcConstellation(System.DateTime)">
             <summary>
-            阴历年生肖
+            根据指定阳历日期计算星座＆诞生石
             </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.SolarHoliday">
-            <summary>
-            按公历日计算的节日
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.LunarHoliday">
-            <summary>
-            计算中国农历节日
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.WeekDayHoliday">
-            <summary>
-            按某月第几周第几日计算的节日
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.ChineseTwentyFours">
-            <summary>
-            定气法计算二十四节气,二十四节气是按地球公转来计算的，并非是阴历计算的
-            </summary>
-            <remarks>
-            节气的定法有两种。古代历法采用的称为"恒气"，即按时间把一年等分为24份，
-            每一节气平均得15天有余，所以又称"平气"。现代农历采用的称为"定气"，即
-            按地球在轨道上的位置为标准，一周360°，两节气之间相隔15°。由于冬至时地
-            球位于近日点附近，运动速度较快，因而太阳在黄道上移动15°的时间不到15天。
-            夏至前后的情况正好相反，太阳在黄道上移动较慢，一个节气达16天之多。采用
-            定气时可以保证春、秋两分必然在昼夜平分的那两天。
-            </remarks>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.ChineseCalendarInfo.GetChineseTwentyFours(System.Int32)">
-            <summary>
-            获取24节气
-            </summary>
-            <param name="year">年份</param>
-            <returns></returns>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.ChineseTwentyFourDay">
-            <summary>
-            获取节气
-            </summary>
-        </member>
-        <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.ChineseTwentyFourDayText">
-            <summary>
-            24节气描述
-            </summary>
+            <param name="date">指定阳历日期</param>
+            <param name="constellation">星座</param>
+            <param name="birthstone">诞生石</param>
         </member>
         <member name="P:Snow.Calendar.Web.Common.ChineseCalendarInfo.LunarYearText">
             <summary>
@@ -314,14 +215,6 @@
             <summary>
             阴历文本
             </summary>
-        </member>
-        <member name="M:Snow.Calendar.Web.Common.ChineseCalendarInfo.CalcConstellation(System.DateTime)">
-            <summary>
-            根据指定阳历日期计算星座＆诞生石
-            </summary>
-            <param name="date">指定阳历日期</param>
-            <param name="constellation">星座</param>
-            <param name="birthstone">诞生石</param>
         </member>
         <member name="M:Snow.Calendar.Web.Common.ChineseCalendarInfo.GetLunarNewYearDate(System.Int32)">
             <summary>
@@ -763,13 +656,76 @@
             星宿
             </summary>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.Constellation.GetConstellation(System.Int32,System.Int32)">
+        <member name="F:Snow.Calendar.Web.Common.Constellation.Starts">
+            <summary>
+            星宿
+            </summary>
+        </member>
+        <member name="F:Snow.Calendar.Web.Common.Constellation.Constellations">
+            <summary>
+            星座
+            </summary>
+        </member>
+        <member name="F:Snow.Calendar.Web.Common.Constellation.BirthStones">
+            <summary>
+            诞生石
+            </summary>
+        </member>
+        <member name="F:Snow.Calendar.Web.Common.Constellation.Palaces">
+            <summary>
+            星宫
+            </summary>
+        </member>
+        <member name="F:Snow.Calendar.Web.Common.Constellation.Planets">
+            <summary>
+            行星
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.Constellation.GetLunarYearAnimal(System.DateTime)">
+            <summary>
+            阴历年生肖
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.Constellation.GetStart(System.Int32,System.Int32)">
             <summary>
             获取星宿描述
             </summary>
             <param name="month">农历月</param>
             <param name="day">农历日</param>
             <returns>星宿信息</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.Constellation.GetConstellation(System.DateTime)">
+            <summary>
+            根据指定阳历日期计算星座＆诞生石
+            </summary>
+            <param name="date">指定阳历日期</param>
+            <param name="constellation">星座</param>
+            <param name="birthstone">诞生石</param>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.IDayHelper">
+            <summary>
+            日相关
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IDayHelper.CompareWeekDayHoliday(System.DateTime,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            比较当天是不是指定的第周几
+            </summary>
+        </member>
+        <member name="T:Snow.Calendar.Web.Common.DayHelper">
+            <summary>
+            日相关
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DayHelper.CompareWeekDayHoliday(System.DateTime,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            比较当天是不是指定的第周几
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.DayHelper.ConvertDayOfWeek(System.DayOfWeek)">
+            <summary>
+            将星期几转成数字表示
+            </summary>
         </member>
         <member name="T:Snow.Calendar.Web.Common.ExceptionHandlerMiddleWare">
             <summary>
@@ -959,19 +915,20 @@
             <param name="day">某个日期</param>
             <returns>日期类型</returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.IsHoliday(System.DateTime)">
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.GetSolarHoliday(System.DateTime)">
             <summary>
-            是否是法定休息日
+            按公历日计算的节日
             </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
         </member>
-        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.IsCompensationWork(System.DateTime)">
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.GetLunarHoliday(Snow.Calendar.Web.Common.ChineseCalendarInfo)">
             <summary>
-            是否是补班
+            计算中国农历节日
             </summary>
-            <param name="day">某个日期</param>
-            <returns></returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.IHolidayHelper.GetWeekDayHoliday(System.DateTime)">
+            <summary>
+            按某月第几周第几日计算的节日
+            </summary>
         </member>
         <member name="T:Snow.Calendar.Web.Common.HolidayHelper">
             <summary>
@@ -984,6 +941,21 @@
             </summary>
             <param name="day">某个日期</param>
             <returns>日期类型</returns>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.GetSolarHoliday(System.DateTime)">
+            <summary>
+            按公历日计算的节日
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.GetLunarHoliday(Snow.Calendar.Web.Common.ChineseCalendarInfo)">
+            <summary>
+            计算中国农历节日
+            </summary>
+        </member>
+        <member name="M:Snow.Calendar.Web.Common.HolidayHelper.GetWeekDayHoliday(System.DateTime)">
+            <summary>
+            按某月第几周第几日计算的节日
+            </summary>
         </member>
         <member name="M:Snow.Calendar.Web.Common.HolidayHelper.IsHoliday(System.DateTime)">
             <summary>
@@ -1003,38 +975,6 @@
             <summary>
             节气类
             </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.SolarTerm.SolarTerms">
-            <summary>
-            24节气
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.SolarTerm.SolarMonth">
-            <summary>
-            节气所在月
-            </summary>
-            <remarks>
-            与SolarTerm索引对应
-            </remarks>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.SolarTerm.INCREASE_OFFSETMAP">
-            <summary>
-            正向偏移值(+1)
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.SolarTerm.DECREASE_OFFSETMAP">
-            <summary>
-            负向偏移值(-1)
-            </summary>
-        </member>
-        <member name="F:Snow.Calendar.Web.Common.SolarTerm.CENTURY_ARRAY">
-            <summary>
-            节气值
-            </summary>
-            <remarks>
-            定义一个二维数组，第一维数组存储的是20世纪的节气C值，第二维数组存储的是21世纪的节气C值,0到23个，
-            与SolarTerm索引对应
-            </remarks>
         </member>
         <member name="M:Snow.Calendar.Web.Common.SolarTerm.GetSolarTerms(System.Int32)">
             <summary>
@@ -1281,6 +1221,31 @@
             万年历
             </summary>
         </member>
+        <member name="T:Snow.Calendar.Web.Model.ConstellationInfo">
+            <summary>
+            星座行星信息
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.ConstellationInfo.SolarConstellation">
+            <summary>
+            阳历星座
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.ConstellationInfo.SolarBirthStone">
+            <summary>
+            阳历诞生石
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.ConstellationInfo.SolarPalace">
+            <summary>
+            星宫
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.ConstellationInfo.SolarPlanet">
+            <summary>
+            行星
+            </summary>
+        </member>
         <member name="T:Snow.Calendar.Web.Model.ConstellationModel">
             <summary>
             星宿实体
@@ -1511,6 +1476,11 @@
         <member name="P:Snow.Calendar.Web.Model.CalendarDay.SolarHoliday">
             <summary>
             按公历日计算的节日
+            </summary>
+        </member>
+        <member name="P:Snow.Calendar.Web.Model.CalendarDay.WeekDayHoliday">
+            <summary>
+            按某月第几周第几日计算的节日
             </summary>
         </member>
         <member name="P:Snow.Calendar.Web.Model.CalendarDay.LunarWeekOfYear">
