@@ -18,7 +18,7 @@ namespace Snow.Calendar.Web.Model
         /// <summary>
         /// 描述信息
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = default!;
     }
 
     /// <summary>
@@ -30,6 +30,6 @@ namespace Snow.Calendar.Web.Model
         /// <summary>
         /// 具体数据
         /// </summary>
-        public T Data { get; set; }
+        public T Data { get; set; } = default!;
     }
 }

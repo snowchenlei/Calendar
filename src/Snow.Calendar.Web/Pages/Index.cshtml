@@ -1,0 +1,145 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="cont_left">
+    <div style="margin-right: 310px; height: 100%;">
+        <div class="c_top clear" style="background: #fff;">
+            <div class="ct_content">
+                <span class="glyphicon glyphicon-chevron-left" id="subMonth" style="cursor: pointer;" aia-hidden="true"></span>
+                <div class="fll">
+                    <select id="yearSel">
+                        @for (int i = 1901; i <= 2050; i++)
+                        {
+                            if (i == DateTime.Now.Year)
+                            {
+                                <option selected="selected">@i</option>
+                            }
+                            else
+                            {
+                                <option>@i</option>
+                            }
+                        }
+                    </select>
+                    <select id="monthSel">
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            if (i == DateTime.Now.Month)
+                            {
+                                <option selected="selected">@i</option>
+                            }
+                            else
+                            {
+                                <option>@i</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <span class="glyphicon glyphicon-chevron-right" id="addMonth" style="cursor: pointer;" aria-hidden="true"></span>
+                <div class="fll">
+                    <div class="chinaDayM fll tac" id="china_Dt"></div>
+                    <div class="toright fll">
+                        <select id="holidaySel">
+                            <option value="-1">请选择</option>
+                            @{
+                                for (int i = 0, max = @Model.HolidayDays.Length; i < max; i++)
+                                {
+                                    <option value="@i">@Model.HolidayDays[i]</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="fll">
+                        <button type="button" id="today_button" class="btn btn-default" style="display: none">今天</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="calendar" id="mainCal">
+            <table>
+                <thead id="headerHtml">@Html.Raw(ViewBag.CanlendarHeader)</thead>
+            </table>
+            <table style="height: 500px;">
+                <tbody id="bodyHtml">@Html.Raw(ViewBag.CanlendarBody)</tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="everydayinfo" style="height: 539px;">
+    <div class="Infotop">
+        <div class="worlDay" id="worlDay"></div>
+        <div class="NumberDay" id="numberDay"></div>
+        <div id="chinaDay" class="lMonthDay"></div>
+        <div class="tactwo">
+            <span id="chinaDay2" class="tac"></span>
+        </div>
+        <div id="yjlist" class="yjlist">
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName" style="vertical-align: middle;">节日</span>
+                    <ul id="holiday" style="display: inline-block;vertical-align: middle;margin: 0px;"></ul>
+                </nobr>
+            </div>
+        </div>
+
+        <div class="tac">
+            <span id="av_action">
+                与今天相距<span class="av-czt" id="tCount"></span>&nbsp;天
+            </span>
+        </div>
+    </div>
+    <div class="Infobottom">
+        <div class="top">
+            <span><span id="day"></span> 详细信息</span>
+        </div>
+        <div id="yjlist" class="yjlist">
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">生肖</span><span id="animal"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">星座</span><span id="solarConstellation"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">年五行</span><span id="yearNaYinFiveElements"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">星宿</span><span id="lunarConstellation"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">月五行</span><span id="monthNaYinFiveElements"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">星宫</span><span id="solarPalace"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">日五行</span><span id="dayNaYinFiveElements"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">行星</span><span id="solarPlanet"> </span>
+                </nobr>
+            </div>
+            <div class="dlist">
+                <nobr>
+                    <span class="dlistName">节气</span><span id="solarTermDays"> </span>
+                </nobr>
+            </div>
+        </div>
+    </div>
+</div>

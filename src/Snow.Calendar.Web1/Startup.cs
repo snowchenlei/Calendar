@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
-using AspectCore.Injector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Snow.Calendar.Web.Common;
 using Snow.Calendar.Web.Interceptor;
 using Snow.Calendar.Web.Model;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Snow.Calendar.Web
 {
@@ -79,9 +69,8 @@ namespace Snow.Calendar.Web
                 })
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                    options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter());
+                });
 
             #region Swagger
 

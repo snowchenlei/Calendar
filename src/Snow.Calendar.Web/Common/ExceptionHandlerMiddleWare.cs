@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Snow.Calendar.Web.Model;
 using System.Net;
-using System.Threading.Tasks;
+using System.Text.Json;
 using System.Xml.Serialization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Logging;
-using Newtonsoft.Json;
-using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Common
 {
@@ -17,11 +10,13 @@ namespace Snow.Calendar.Web.Common
     /// </summary>
     public class ExceptionHandlerMiddleWare
     {
+        private readonly ILogger<ExceptionHandlerMiddleWare> logger;
         private readonly RequestDelegate next;
 
-        public ExceptionHandlerMiddleWare(RequestDelegate next)
+        public ExceptionHandlerMiddleWare(RequestDelegate next, ILogger<ExceptionHandlerMiddleWare> logger)
         {
             this.next = next;
+            this.logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -36,16 +31,16 @@ namespace Snow.Calendar.Web.Common
             }
         }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             if (exception == null) return;
-            await WriteExceptionAsync(context, exception).ConfigureAwait(false);
+            await WriteExceptionAsync(context, exception);
         }
 
-        private static async Task WriteExceptionAsync(HttpContext context, Exception exception)
+        private async Task WriteExceptionAsync(HttpContext context, Exception exception)
         {
             //记录日志
-            LogHelper.LogExceptionMessage(exception);
+            logger.LogError(exception, "发生异常：" + exception.Message);
 
             //返回友好的提示
             var response = context.Response;
@@ -56,7 +51,7 @@ namespace Snow.Calendar.Web.Common
 
             response.ContentType = context.Request.Headers["Accept"];
 
-            if (response.ContentType.ToLower() == "application/xml")
+            if (response.ContentType?.ToLower() == "application/xml")
             {
                 await response.WriteAsync(Object2XmlString(new Response()
                 {
@@ -67,7 +62,7 @@ namespace Snow.Calendar.Web.Common
             else
             {
                 response.ContentType = "application/json";
-                await response.WriteAsync(JsonConvert.SerializeObject(new Response()
+                await response.WriteAsync(JsonSerializer.Serialize(new Response()
                 {
                     Code = 0,
                     Message = exception.GetBaseException().Message
