@@ -9,7 +9,9 @@ namespace Snow.Calendar.Web.Controllers
     /// <summary>
     /// 主控制器
     /// </summary>
-    public class HomeController : Controller
+    [ApiController]
+    [Route("api/home")]
+    public class HomeController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IBuildHtml _buildHtml;
@@ -32,34 +34,20 @@ namespace Snow.Calendar.Web.Controllers
             _calendarDateHelper = calendarDateHelper;
         }
 
-        private string[] HolidayDays = {
-            "元旦", "春节", "元宵节", "清明节", "端午节", "中秋节", "国庆节"
-        };
-
-        /// <summary>
-        /// 主页
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Index()
-        {
-            ViewBag.HolidayDays = HolidayDays;
-            return View();
-        }
-
         /// <summary>
         /// 获取核心数据
         /// </summary>
         /// <param name="year"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        [HttpGet]
-        public JsonResult GetContent(int year, int month)
+        [HttpGet("content")]
+        public object GetContent(int year, int month)
         {
-            return Json(new
+            return new
             {
                 Header = _buildHtml.CreateHeder(),
                 Body = _buildHtml.CreateBody(year, month)
-            });
+            };
         }
 
         /// <summary>
@@ -69,12 +57,13 @@ namespace Snow.Calendar.Web.Controllers
         /// <param name="month">月</param>
         /// <param name="day">日</param>
         /// <returns>日信息</returns>
-        public JsonResult GetDay(int year, int month, int day)
+        [HttpGet("day")]
+        public object GetDay(int year, int month, int day)
         {
             DateTime thisDate = new DateTime(year, month, day);
             CalendarDate calendarDate = _calendarDateHelper.GetCalendarDate(thisDate);
             string big = calendarDate.CalendarMonth.IsBigMonth ? "大" : "小";
-            return Json(new
+            return new
             {
                 LunarDateText = $"{calendarDate.CalendarYear.LunarYearSexagenary}({calendarDate.CalendarYear.LunarYearAnimal})年 {calendarDate.CalendarMonth.LunarMonthText}月{calendarDate.CalendarDay.LunarDayText}",
                 WorlDay = $"{calendarDate.CalendarYear.CurrentYear}年{calendarDate.CalendarMonth.CurrentMonth}({big}) {calendarDate.CalendarDay.DayOfWeekText}",
@@ -93,19 +82,7 @@ namespace Snow.Calendar.Web.Controllers
                 Holiday = _dateHelper.GetHoliday(calendarDate),
                 DayText = thisDate.ToString("yyyy年MM月dd日"),
                 SubtractDays = Math.Abs(Convert.ToDateTime(DateTime.Now.ToShortDateString()).Subtract(thisDate).Days)
-            });
-        }
-
-        /// <summary>
-        /// 错误页
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Error()
-        {
-            var feature = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            var error = feature?.Error;
-            _logger.LogError("Oops!Error Info-----:", error);
-            return View();
+            };
         }
     }
 }

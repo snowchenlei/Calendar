@@ -3,10 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>神舟万年历</title>
-    <link href="css/layout.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="css/layout.css" rel="stylesheet" asp-append-version="true" />
     <link href="css/reset.min.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="lib/select2/css/select2.min.css" asp-append-version="true" />
     <environment include="Development">
         <link href="css/site.css" rel="stylesheet" asp-append-version="true"/>
     </environment>
@@ -34,15 +34,13 @@
         @RenderBody()
   
     </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Snow.Calendar.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <footer>
+        &copy; 2024 - Snow.Calendar.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
     </footer>
     <script src="lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="lib/bootstrap-select/js/bootstrap-select.min.js" asp-append-version="true"></script>
-    <script src="lib/bootstrap-select/js/i18n/defaults-zh_CN.min.js" asp-append-version="true"></script>
+    <script src="lib/select2/js/select2.min.js" asp-append-version="true"></script>
+    <script src="lib/select2/js/i18n/zh-CN.min.js" asp-append-version="true"></script>
     <environment include="Development">
         <script src="js/site.js" asp-append-version="true"></script>
     </environment>

@@ -9,23 +9,23 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Snow.Calendar.Web
 build_property.RootNamespace = Snow.Calendar.Web
-build_property.ProjectDir = F:\git\Snow\Calendar\src\Snow.Calendar.Web\
+build_property.ProjectDir = D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = F:\git\Snow\Calendar\src\Snow.Calendar.Web
+build_property.MSBuildProjectDirectory = D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1
 build_property._RazorSourceGeneratorDebug = 
 
-[F:/git/Snow/Calendar/src/Snow.Calendar.Web/Views/Home/Error.cshtml]
+[D:/code/git/Snow/Calendar/src/Snow.Calendar.Web1/Views/Home/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/git/Snow/Calendar/src/Snow.Calendar.Web/Views/Home/Index.cshtml]
+[D:/code/git/Snow/Calendar/src/Snow.Calendar.Web1/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/git/Snow/Calendar/src/Snow.Calendar.Web/Views/_ViewImports.cshtml]
+[D:/code/git/Snow/Calendar/src/Snow.Calendar.Web1/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

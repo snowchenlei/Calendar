@@ -7,7 +7,9 @@
 body, button, input, select, textarea {
     font: 12px/1.125 "Microsoft YaHei",Arial,Helvetica,sans-serif;
 }
-
+footer {
+    text-align: center;
+}
 .clearfix {
     *zoom: 1;
 }

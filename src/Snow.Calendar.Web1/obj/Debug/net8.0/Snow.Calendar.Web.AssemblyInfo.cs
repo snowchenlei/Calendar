@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Snow.Calendar.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+35e04638c6f544f24db8ea412cbf3c20e94b730c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee94631103662db57a3a046ce973a010a1b67655")]
 [assembly: System.Reflection.AssemblyProductAttribute("Snow.Calendar.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Snow.Calendar.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

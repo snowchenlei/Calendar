@@ -18,7 +18,7 @@ $(function () {
 
 // 加载主体
 function loadContent() {
-    $.get('/Home/GetContent',
+    $.get('api/home/content',
         { year: year, month: month },
         function (data) {
             document.getElementById('headerHtml').innerHTML = data.header;
@@ -30,7 +30,7 @@ function loadContent() {
 }
 
 function loadDay() {
-    $.get('/Home/GetDay',
+    $.get('api/home/day',
         { year: year, month: month, day: day },
         function (data) {
             var holidaies = new Array();
@@ -60,8 +60,8 @@ function loadDay() {
 
 function changeDate() {
     isChange = false;
-    $('#yearSel').selectpicker('val', year);
-    $('#monthSel').selectpicker('val', month);
+    $('#yearSel').val(year).select2();
+    $('#monthSel').val(month).select2();
 }
 
 // 初始化事件
@@ -73,7 +73,7 @@ function initEvent() {
             changeDate();
         } else {
             month -= 1;
-            $('#monthSel').selectpicker('val', month);
+            $('#monthSel').val(month).select2();
         }
     });
     $('#addMonth').click(function () {
@@ -83,7 +83,7 @@ function initEvent() {
             changeDate();
         } else {
             month += 1;
-            $('#monthSel').selectpicker('val', month);
+            $('#monthSel').val(month).select2();
         }
     });
     $(document).on('click',
@@ -97,10 +97,10 @@ function initEvent() {
         });
     $('#today_button').click(function () {
         if (thisYear !== year) {
-            $('#yearSel').selectpicker('val', thisYear);
+            $('#yearSel').val(thisYear).select2();
         }
         if (thisMonth !== month) {
-            $('#monthSel').selectpicker('val', thisMonth);
+            $('#monthSel').val(thisMonth).select2();
         }
         toToday();
         clickBlock($($('.today')[0]));
@@ -121,14 +121,13 @@ function initEvent() {
 
 // 初始化组件
 function initComponent() {
-    $('#yearSel').selectpicker({
-        width: 100,
-        liveSearch: true
-    });
-    $('#monthSel').selectpicker({
+    $('#yearSel').select2({
         width: 100
     });
-    $('#holidaySel').selectpicker({
+    $('#monthSel').select2({
+        width: 100
+    });
+    $('#holidaySel').select2({
         width: 100
     });
 }

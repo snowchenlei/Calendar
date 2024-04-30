@@ -42,7 +42,7 @@ namespace Snow.Calendar.Web.Common
         private static async Task WriteExceptionAsync(HttpContext context, Exception exception)
         {
             //记录日志
-            LogHelper.LogExceptionMessage(exception);
+            //LogHelper.LogExceptionMessage(exception);
 
             //返回友好的提示
             var response = context.Response;

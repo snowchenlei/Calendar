@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "F:\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web\\Snow.Calendar.Web.csproj": {}
+    "D:\\code\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web1\\Snow.Calendar.Web.csproj": {}
   },
   "projects": {
-    "F:\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web\\Snow.Calendar.Web.csproj": {
+    "D:\\code\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web1\\Snow.Calendar.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web\\Snow.Calendar.Web.csproj",
+        "projectUniqueName": "D:\\code\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web1\\Snow.Calendar.Web.csproj",
         "projectName": "Snow.Calendar.Web",
-        "projectPath": "F:\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web\\Snow.Calendar.Web.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "F:\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web\\obj\\",
+        "projectPath": "D:\\code\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web1\\Snow.Calendar.Web.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "D:\\code\\git\\Snow\\Calendar\\src\\Snow.Calendar.Web1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://121.196.122.107:8880/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

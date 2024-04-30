@@ -1,12 +1,28 @@
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+using Snow.Calendar.Web.Common;
+using Snow.Calendar.Web.Model;
+using System.Globalization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+builder.Services.AddTransient<Resource>();
+builder.Services.AddTransient<ChineseCalendarInfo>();
+builder.Services.AddTransient<IDateHelper, DateHelper>();
+builder.Services.AddTransient<SolarTerm>();
+builder.Services.AddTransient<IDayHelper, DayHelper>();
+builder.Services.AddTransient<IBuildHtml, BuildHtml>();
+builder.Services.AddTransient<ICalendarDateHelper, CalendarDateHelper>();
+builder.Services.AddTransient<IHolidayHelper, HolidayHelper>();
+builder.Services.AddTransient<Constellation>();
+builder.Services.AddTransient<ChineseLunisolarCalendar, ChineseLunisolarCalendar>();
+
+builder.Services.AddMemoryCache();
 // Add services to the container.
 builder.Services.AddRazorPages();
-
 builder.Services.AddControllers();
 
 #region Swagger
@@ -61,5 +77,6 @@ app.UseSwaggerUI(c =>
 #endregion Swagger
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();

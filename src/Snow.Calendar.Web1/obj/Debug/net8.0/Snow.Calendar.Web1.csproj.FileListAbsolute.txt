@@ -1,0 +1,10 @@
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.csproj.AssemblyReference.cache
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.GeneratedMSBuildEditorConfig.editorconfig
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.AssemblyInfoInputs.cache
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.AssemblyInfo.cs
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.csproj.CoreCompileInputs.cache
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.MvcApplicationPartsAssemblyInfo.cs
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.MvcApplicationPartsAssemblyInfo.cache
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.RazorAssemblyInfo.cache
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.RazorAssemblyInfo.cs
+D:\code\git\Snow\Calendar\src\Snow.Calendar.Web1\obj\Debug\net8.0\Snow.Calendar.Web1.sourcelink.json

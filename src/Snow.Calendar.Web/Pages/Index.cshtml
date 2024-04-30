@@ -43,26 +43,32 @@
                     <div class="toright fll">
                         <select id="holidaySel">
                             <option value="-1">请选择</option>
-                            @{
-                                for (int i = 0, max = @Model.HolidayDays.Length; i < max; i++)
+                            @for (int i = 0, max = Model.HolidayDays.Length; i < max; i++)
                                 {
                                     <option value="@i">@Model.HolidayDays[i]</option>
                                 }
-                            }
+                            
                         </select>
                     </div>
                     <div class="fll">
-                        <button type="button" id="today_button" class="btn btn-default" style="display: none">今天</button>
+                        <button type="button" id="today_button" class="btn btn-primary btn-sm" style="display: none">今天</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="calendar" id="mainCal">
             <table>
-                <thead id="headerHtml">@Html.Raw(ViewBag.CanlendarHeader)</thead>
+                <thead id="headerHtml">
+                    <tr>
+                    @foreach (string dayOfWeek in Model.Resource.OneWeek.Values)
+                    {
+                        <td class="thead">@dayOfWeek</td>
+                    }
+                    </tr>
+                </thead>
             </table>
             <table style="height: 500px;">
-                <tbody id="bodyHtml">@Html.Raw(ViewBag.CanlendarBody)</tbody>
+                <tbody id="bodyHtml"></tbody>
             </table>
         </div>
     </div>

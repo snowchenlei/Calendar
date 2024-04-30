@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Snow.Calendar.Web.Common;
 using Snow.Calendar.Web.Interceptor;
@@ -76,15 +77,15 @@ namespace Snow.Calendar.Web
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "万年历接口",
                     Version = "v1",
-                    Contact = new Contact
+                    Contact = new OpenApiContact
                     {
                         Name = "Snow",
                         Email = "1007215202@qq.com",
-                        Url = String.Empty
+                        Url = new Uri("")
                     },
                     Description = "支持节日查询，年月查询，农历查询"
                 });
