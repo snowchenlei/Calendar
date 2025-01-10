@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>神舟万年历</title>
+    <link href="css/layout.css" rel="stylesheet" asp-append-version="true" />
+    <link href="css/reset.min.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="lib/select2/css/select2.min.css" asp-append-version="true" />
+    <environment include="Development">
+        <link href="css/site.css" rel="stylesheet" asp-append-version="true"/>
+    </environment>
+    <environment exclude="Development">
+        <link href="css/site.min.css" rel="stylesheet" asp-append-version="true"/>
+    </environment>
+    <link href="css/wnlImprove.min.css" rel="stylesheet" asp-append-version="true" />
+    
+    <style type="text/css">
+        body {
+            background-color: #F3F3F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="wrapper">
+            <div class="topbar-wrapper">
+                <a href="/swagger" target="_blank" style=""><span>接口文档</span></a>
+                <a href="https://github.com/snowchenlei/calendar" target="_blank" style="margin-left: 20px;"><span>源码</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="content clearfix" id="content">
+        @RenderBody()
+  
+    </div>
+    <footer>
+        &copy; 2024 - Snow.Calendar.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    </footer>
+    <script src="lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="lib/select2/js/select2.min.js" asp-append-version="true"></script>
+    <script src="lib/select2/js/i18n/zh-CN.min.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using AspectCore.DynamicProxy;
-using Microsoft.Extensions.Caching.Memory;
-using Snow.Calendar.Web.Interceptor;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Common
@@ -108,12 +104,12 @@ namespace Snow.Calendar.Web.Common
             List<string> holidays = new List<string>();
             if (calendarDate.CalendarDay.LunarHoliday.Value != null)
             {
-                holidays.AddRange(calendarDate.CalendarDay.LunarHoliday.Value?.Split(' '));
+                holidays.AddRange(calendarDate.CalendarDay.LunarHoliday.Value?.Split(' ') ?? []);
             }
 
             if (calendarDate.CalendarDay.SolarHoliday.Value != null)
             {
-                holidays.AddRange(calendarDate.CalendarDay.SolarHoliday.Value?.Split(' '));
+                holidays.AddRange(calendarDate.CalendarDay.SolarHoliday.Value?.Split(' ') ?? []);
             }
 
             if (!String.IsNullOrEmpty(calendarDate.CalendarDay.WeekDayHoliday))

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
-using NUglify.Helpers;
 using Snow.Calendar.Web.Common;
 
 namespace Snow.Calendar.Web.Model
@@ -93,9 +90,9 @@ namespace Snow.Calendar.Web.Model
             {
                 CanlendarDayInfo canlendarDay = GetCanlendarDay(date);
                 DayOfWeek current = date.CalendarDay.DayOfWeek;
-                if (calendarDates.IndexOf(date) == 0)
+                if (Array.IndexOf(calendarDates, date) == 0)
                 {
-                    for (int i = 0, max = _resource.OneWeek.Keys.ToArray().IndexOf(current); i < max; i++)
+                    for (int i = 0, max = Array.IndexOf(_resource.OneWeek.Keys.ToArray(), current); i < max; i++)
                     {
                         sbHtml.Append("<td style='height: 16%;' class='block'></td>");
                     }

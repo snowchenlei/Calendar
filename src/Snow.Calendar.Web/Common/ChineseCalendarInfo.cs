@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
-using System.Linq;
-using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Common
 {
@@ -16,9 +11,9 @@ namespace Snow.Calendar.Web.Common
     {
         private DateTime m_SolarDate;
         private int m_LunarYear, m_LunarMonth;
-        private string m_LunarYearSexagenary = null, m_LunarYearAnimal = null;
-        private string m_LunarYearText = null, m_LunarMonthText = null, m_LunarDayText = null;
-        private string m_SolarWeekText = null, m_SolarConstellation = null, m_SolarBirthStone = null;
+        private string? m_LunarYearSexagenary = null, m_LunarYearAnimal = null;
+        private string? m_LunarYearText = null, m_LunarMonthText = null, m_LunarDayText = null;
+        private string? m_SolarWeekText = null, m_SolarConstellation = null, m_SolarBirthStone = null;
         private static DateTime GanZhiStartDay = new DateTime(1899, 12, 22); //起始日
         private static DateTime ChineseConstellationReferDay = new DateTime(2007, 9, 11);//28星宿参考值,本日为角
 

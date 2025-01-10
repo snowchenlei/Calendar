@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
-using Newtonsoft.Json;
 using Snow.Calendar.Web.Model;
 
 namespace Snow.Calendar.Web.Common
@@ -64,7 +61,7 @@ namespace Snow.Calendar.Web.Common
             int y = year % 100;// 步骤1:取年分的后两位数
             if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
             {   // 闰年
-                if (new int[] { 0, 1, 2, 3 }.Contains(_solarModels.IndexOf(solar)))
+                if (new int[] { 0, 1, 2, 3 }.Contains(Array.IndexOf(_solarModels,solar)))
                 {
                     // 注意：凡闰年3月1日前闰年数要减一，
                     // 即：L=[(Y-1)/4],因为小寒、大寒、立春、雨水这两个节气都小于3月1日,

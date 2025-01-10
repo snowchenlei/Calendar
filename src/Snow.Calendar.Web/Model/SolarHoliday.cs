@@ -13,7 +13,7 @@ namespace Snow.Calendar.Web.Model
         public int Month { get; set; }
         public int Day { get; set; }
         public int Recess { get; set; } //假期长度
-        public string HolidayName { get; set; }
-        public string HolidayAll { get; set; }
+        public string HolidayName { get; set; } = default!;
+        public string HolidayAll { get; set; } = default!;
     }
 }

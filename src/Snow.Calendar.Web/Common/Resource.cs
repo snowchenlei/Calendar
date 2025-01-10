@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.FileProviders;
-using Newtonsoft.Json;
 using Snow.Calendar.Web.Model;
+using System.Text.Json;
 
 namespace Snow.Calendar.Web.Common
 {
@@ -30,32 +23,32 @@ namespace Snow.Calendar.Web.Common
         /// <summary>
         /// 节假日(休息)
         /// </summary>
-        public Dictionary<int, Dictionary<int, int[]>> Holidays => Get<Dictionary<int, Dictionary<int, int[]>>>("Holidays", "Config/holiday.json");
+        public Dictionary<int, Dictionary<int, int[]>> Holidays => Get<Dictionary<int, Dictionary<int, int[]>>>("Holidays", "Config/holiday.json") ?? [];
 
         /// <summary>
         /// 工作日(补班)
         /// </summary>
-        public Dictionary<int, Dictionary<int, int[]>> Workdays => Get<Dictionary<int, Dictionary<int, int[]>>>("Workdays", "Config/workday.json");
+        public Dictionary<int, Dictionary<int, int[]>> Workdays => Get<Dictionary<int, Dictionary<int, int[]>>>("Workdays", "Config/workday.json") ?? [];
 
         /// <summary>
         /// 按公历计算的节日
         /// </summary>
-        public SolarHoliday[] SolarHoliday => Get<SolarHoliday[]>("SolarHoliday", "Config/solarHoliday.json");
+        public SolarHoliday[] SolarHoliday => Get<SolarHoliday[]>("SolarHoliday", "Config/solarHoliday.json") ?? [];
 
         /// <summary>
         /// 按农历计算的节日
         /// </summary>
-        public LunarHoliday[] LunarHoliday => Get<LunarHoliday[]>("LunarHoliday", "Config/lunarHoliday.json");
+        public LunarHoliday[] LunarHoliday => Get<LunarHoliday[]>("LunarHoliday", "Config/lunarHoliday.json") ?? [];
 
         /// <summary>
         /// 按某月第几个星期几
         /// </summary>
-        public WeekHoliday[] WeekHoliday => Get<WeekHoliday[]>("WeekHoliday", "Config/weekHoliday.json");
+        public WeekHoliday[] WeekHoliday => Get<WeekHoliday[]>("WeekHoliday", "Config/weekHoliday.json") ?? [];
 
         /// <summary>
         /// 节气
         /// </summary>
-        public SolarModel[] SolarTerms => Get<SolarModel[]>("SolarTerms", "Config/solarTerm.json");
+        public SolarModel[] SolarTerms => Get<SolarModel[]>("SolarTerms", "Config/solarTerm.json") ?? [];
 
         /// <summary>
         /// 获取Json数据
@@ -64,7 +57,7 @@ namespace Snow.Calendar.Web.Common
         /// <param name="key"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        private T Get<T>(string key, string path)
+        private T? Get<T>(string key, string path)
         {
             return _cache.GetOrCreate(key, entry =>
             {
@@ -76,7 +69,7 @@ namespace Snow.Calendar.Web.Common
                     using (var reader = new StreamReader(stream))
                     {
                         string output = reader.ReadToEnd();
-                        return JsonConvert.DeserializeObject<T>(output);
+                        return JsonSerializer.Deserialize<T>(output);
                     }
                 }
             });
