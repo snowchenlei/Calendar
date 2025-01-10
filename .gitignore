@@ -5,3 +5,6 @@
 /src/.vs
 /src/Snow.Calendar.Web/bin
 /src/Snow.Calendar.Web/obj
+/src/Snow.Calendar.Desktop/bin
+/src/Snow.Calendar.Desktop/obj
+.vshistory/

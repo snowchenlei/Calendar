@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35514.174 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snow.Calendar.Web", "Snow.Calendar.Web\Snow.Calendar.Web.csproj", "{08B7D82E-BD43-4F7B-8C1F-7BE7229B72BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snow.Calendar.Desktop", "Snow.Calendar.Desktop\Snow.Calendar.Desktop.csproj", "{3DBBD141-AC43-4B6B-BE82-0DA80FA20B25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
