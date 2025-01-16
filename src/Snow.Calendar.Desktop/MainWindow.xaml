@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Snow.Calendar"
         mc:Ignorable="d"
-        Title="万年历" Height="600" Width="800" Background="#F0F0F0">
+        SizeChanged="Window_SizeChanged"
+        Title="万年历" Height="600" Width="800" MinWidth="600" Background="#F0F0F0">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" x:Name="DetailsColumn" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -17,33 +17,31 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!-- 顶部控制区域 -->
-            <Border Background="#FFFFFF" Padding="10"  CornerRadius="8" Grid.Row="0">
+            <Border Background="#FFFFFF" Padding="10" Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel>
-                        <TextBlock Text="选择年份" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5" />
                         <ComboBox x:Name="YearComboBox" MinWidth="100" Height="30" FontSize="14" SelectionChanged="YearOrMonthChanged" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Text="选择月份" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5" />
-                        <ComboBox x:Name="MonthComboBox" MinWidth="80" Height="30" FontSize="14" SelectionChanged="YearOrMonthChanged" />
+                        <ComboBox x:Name="MonthComboBox" MinWidth="80" Height="30" FontSize="14" Margin="10 0" SelectionChanged="YearOrMonthChanged" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Button Name="Today" Padding="5 0" Height="30" Click="Today_OnClick">今天</Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <!-- 日历显示区域 -->
-            <Border Background="#FFFFFF" Padding="20" CornerRadius="8" Grid.Row="1">
+            <Border Background="#FFFFFF" Padding="20" Grid.Row="1">
                 <UniformGrid x:Name="CalendarGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <!-- 动态生成内容 -->
                 </UniformGrid>
             </Border>
         </Grid>
-        <Border Grid.Column="1" Background="LightGray" Padding="10" Visibility="Collapsed" x:Name="DetailsPanel">
+        <Border Grid.Column="1" Background="LightGray" Padding="10" Visibility="Visible" x:Name="DetailsPanel">
             <StackPanel>
                 <!-- 显示日期详情 -->
                 <TextBlock x:Name="DetailsTextBlock" FontSize="14" TextWrapping="Wrap" Margin="5" />
-
-                <!-- 隐藏按钮 -->
-                <Button Content="隐藏" Width="100" HorizontalAlignment="Right" Margin="5" Click="HideDetailsPanel_Click" />
             </StackPanel>
         </Border>
     </Grid>

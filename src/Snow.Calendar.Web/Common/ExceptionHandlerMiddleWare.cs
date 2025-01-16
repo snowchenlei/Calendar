@@ -2,6 +2,8 @@
 using System.Net;
 using System.Text.Json;
 using System.Xml.Serialization;
+using Snow.Calendar.Common;
+using Snow.Calendar.Common.Model;
 
 namespace Snow.Calendar.Web.Common
 {

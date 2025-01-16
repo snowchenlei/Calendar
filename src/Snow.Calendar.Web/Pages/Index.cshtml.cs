@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Snow.Calendar.Web.Common;
 using Snow.Calendar.Web.Model;
 using System.Data;
+using Snow.Calendar.Common;
+using Snow.Calendar.Common.Model;
+using Snow.Calendar.Common.Service;
 
 namespace Snow.Calendar.Web.Pages
 {
@@ -30,11 +33,12 @@ namespace Snow.Calendar.Web.Pages
             _calendarDateHelper = calendarDateHelper;
             _buildHtml = buildHtml;
         }
+
         public List<IndexModelModel> DateModels { get; set; }
+
         public string[] HolidayDays = {
             "元旦", "春节", "元宵节", "清明节", "端午节", "中秋节", "国庆节"
         };
-
 
         public void OnGet()
         {
@@ -42,7 +46,7 @@ namespace Snow.Calendar.Web.Pages
             {
                 Year = DateTime.Now.Year;
             }
-            if(!Month.HasValue)
+            if (!Month.HasValue)
             {
                 Month = DateTime.Now.Month;
             }
@@ -61,9 +65,10 @@ namespace Snow.Calendar.Web.Pages
             }
         }
     }
+
     public class IndexModelModel
     {
-        public CalendarDate CalendarDate { get; set;}
+        public CalendarDate CalendarDate { get; set; }
         public int CurrentDay { get; set; }
         public DayType DayType { get; set; }
     }

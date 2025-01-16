@@ -1,10 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\**" />
+    <Compile Remove="Model\**" />
+    <Content Remove="Common\**" />
+    <Content Remove="Model\**" />
+    <EmbeddedResource Remove="Common\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <None Remove="Common\**" />
+    <None Remove="Model\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Common\ExceptionHandlerMiddleWare.cs" />
+    <Compile Include="Model\BuildHtml.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
@@ -13,7 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Service\" />
     <Folder Include="Pages\Shared\Components\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Snow.Calendar.Common\Snow.Calendar.Common.csproj" />
   </ItemGroup>
 
 </Project>

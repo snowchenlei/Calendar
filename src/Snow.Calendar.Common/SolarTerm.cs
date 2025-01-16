@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Snow.Calendar.Common;
-using Snow.Calendar.Common.Model;
-using Snow.Calendar.Web.Model;
+﻿using Snow.Calendar.Common.Model;
 
-namespace Snow.Calendar.Web.Common
+namespace Snow.Calendar.Common
 {
     /// <summary>
     /// 节气类
     /// </summary>
-    public class SolarTerm
+    public class SolarTerm(Resource resource)
     {
         private const double D = 0.2422;
-        private readonly SolarModel[] _solarModels;
-
-        public SolarTerm(Resource resource)
-        {
-            _solarModels = resource.SolarTerms;
-        }
+        private readonly SolarModel[] _solarModels = resource.SolarTerms;
 
         #region 24节气
 
@@ -74,9 +64,9 @@ namespace Snow.Calendar.Web.Common
 
             double centuryValue = solar.ThrottleValues[centuryIndex];
             int dateNum = (int)(y * D + centuryValue) - (int)(y / 4);// 步骤3，使用公式[Y*D+C]-L计算
-            if (solar.Offsets.ContainsKey(year))
+            if (solar.Offsets.TryGetValue(year, out int offset))
             {
-                dateNum += solar.Offsets[year];
+                dateNum += offset;
             }
             return dateNum;
         }
@@ -102,9 +92,13 @@ namespace Snow.Calendar.Web.Common
         /// <returns>描述</returns>
         public string GetSolarTermDays(DateTime date)
         {
+            if (_solarModels.Length == 0)
+            {
+                return String.Empty;
+            }
             Dictionary<DateTime, string> solarTerms = GetSolarTerms(date.Year);
-            var prevTwentyFours = solarTerms.Where(c => c.Key.DayOfYear <= date.DayOfYear);
-            var nextTwentyFours = solarTerms.Where(c => c.Key.DayOfYear > date.DayOfYear);
+            KeyValuePair<DateTime, string>[] prevTwentyFours = solarTerms.Where(c => c.Key.DayOfYear <= date.DayOfYear).ToArray();
+            KeyValuePair<DateTime, string>[] nextTwentyFours = solarTerms.Where(c => c.Key.DayOfYear > date.DayOfYear).ToArray();
 
             KeyValuePair<DateTime, string> prevTwentyFour = prevTwentyFours.Any()
                 ? prevTwentyFours.OrderByDescending(c => c.Key).First()

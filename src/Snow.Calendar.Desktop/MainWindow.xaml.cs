@@ -1,14 +1,10 @@
 ﻿using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Snow.Calendar.Common;
+using Snow.Calendar.Common.Model;
+using Snow.Calendar.Common.Service;
 
 namespace Snow.Calendar
 {
@@ -17,8 +13,19 @@ namespace Snow.Calendar
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private const double MinWidthToShowDetails = 800;
+        private readonly IDateHelper _dateHelper;
+        private readonly ICalendarDateHelper _calendarDateHelper;
+        private readonly Resource _resource;
+        private Border? selectedCell = null;
+        private Border? todayCell = null;
+
+        public MainWindow(IDateHelper dateHelper, ICalendarDateHelper calendarDateHelper, Resource resource)
         {
+            _dateHelper = dateHelper;
+            _calendarDateHelper = calendarDateHelper;
+            _resource = resource;
+
             InitializeComponent();
             InitializeYearAndMonth();
         }
@@ -38,7 +45,6 @@ namespace Snow.Calendar
             }
             MonthComboBox.SelectedItem = DateTime.Now.Month;
 
-            // 显示当前日期的日历
             GenerateCalendar(DateTime.Now.Year, DateTime.Now.Month);
         }
 
@@ -69,47 +75,69 @@ namespace Snow.Calendar
             CalendarGrid.Rows = rows + 1; // 多一行用于显示星期标题
             CalendarGrid.Columns = 7;
             // 添加星期标题
-            string[] daysOfWeek = ["日", "一", "二", "三", "四", "五", "六"];
-            foreach (var day in daysOfWeek)
+            Dictionary<DayOfWeek, string> daysOfWeek = new Dictionary<DayOfWeek, string>()
             {
+                [DayOfWeek.Sunday] = "日",
+                [DayOfWeek.Monday] = "一",
+                [DayOfWeek.Tuesday] = "二",
+                [DayOfWeek.Wednesday] = "三",
+                [DayOfWeek.Thursday] = "四",
+                [DayOfWeek.Friday] = "五",
+                [DayOfWeek.Saturday] = "六",
+            };
+            foreach (KeyValuePair<DayOfWeek, string> day in daysOfWeek)
+            {
+                TextBlock text = new TextBlock
+                {
+                    Text = day.Value,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                if (day.Key is DayOfWeek.Saturday or DayOfWeek.Sunday)
+                {
+                    text.Foreground = new SolidColorBrush(Colors.Red);
+                }
                 CalendarGrid.Children.Add(new Border
                 {
-                    BorderBrush = new SolidColorBrush(Color.FromRgb(220, 220, 220)),
-                    BorderThickness = new Thickness(1),
-                    Background = new SolidColorBrush(Color.FromRgb(240, 240, 240)),
-                    Child = new TextBlock
-                    {
-                        Text = day,
-                        FontWeight = FontWeights.Bold,
-                        FontSize = 16,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center
-                    }
+                    Child = text
                 });
             }
 
-            // 填充空白天数
-            for (int i = 0; i < firstDayOfWeek; i++)
+            IEnumerable<DateTime> days = _dateHelper.GetDatesByMonth(year, month);
+            CalendarDate[] dates = _calendarDateHelper.GetCalendarDates(days).ToArray();
+            for (int i = 0, max = Array.IndexOf(_resource.OneWeek.Keys.ToArray(), dates.First().CalendarDay.DayOfWeek); i < max; i++)
             {
                 CalendarGrid.Children.Add(new Border());
             }
-
-            // 填充日期
-            var chineseCalendar = new ChineseLunisolarCalendar();
-            for (int day = 1; day <= daysInMonth; day++)
+            foreach (CalendarDate date in dates)
             {
-                DateTime currentDay = new DateTime(year, month, day);
-                bool isWeekend = currentDay.DayOfWeek == DayOfWeek.Saturday || currentDay.DayOfWeek == DayOfWeek.Sunday;
+                CanlendarDayInfo calendarDay = GetCalendarDay(date);
+                TextBlock content = new TextBlock
+                {
+                    Text = date.CalendarDay.CurrentDay.ToString(),
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                DateTime currentDay = new DateTime(year, month, calendarDay.CurrentDay);
+                bool isWeekend = currentDay.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
                 bool isToday = currentDay.Date == DateTime.Today;
-                string lunarDay = GetLunarDate(chineseCalendar, currentDay, out bool isFirstDayOfMonth);
+                string lunarDay = calendarDay.LunarDayText;
+
+                if (isWeekend)
+                {
+                    content.Foreground = new SolidColorBrush(Colors.Red);
+                }
+                if (isToday)
+                {
+                    content.Foreground = new SolidColorBrush(Colors.Green);
+                }
                 Border cell = new()
                 {
-                    BorderBrush = isToday ? new SolidColorBrush(Colors.Orange) : new SolidColorBrush(Colors.Gray),
-                    BorderThickness = isToday ? new Thickness(2) : new Thickness(1),
-                    Margin = new Thickness(5),
-                    Background = isWeekend
-                        ? new SolidColorBrush(Color.FromRgb(255, 230, 230))
-                        : new SolidColorBrush(Colors.White),
+                    Background = Brushes.Transparent,
                     CornerRadius = new CornerRadius(4),
                     Child = new StackPanel()
                     {
@@ -117,31 +145,62 @@ namespace Snow.Calendar
                         HorizontalAlignment = HorizontalAlignment.Center,
                         Children =
                         {
-                            new TextBlock
-                            {
-                                Text = day.ToString(),
-                                FontSize = 16,
-                                FontWeight = isToday ? FontWeights.Bold : FontWeights.Normal,
-                                Foreground = isToday
-                                    ? new SolidColorBrush(Colors.OrangeRed)
-                                    : (isWeekend ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black)),
-                                HorizontalAlignment = HorizontalAlignment.Center,
-                                VerticalAlignment = VerticalAlignment.Center
-                            },
+                            content,
                             new TextBlock
                             {
                                 Text = lunarDay,
                                 FontSize = 12,
-                                FontWeight = isFirstDayOfMonth ? FontWeights.Bold : FontWeights.Normal,
+                                FontWeight = date.CalendarDay.LunarDay == 1 ? FontWeights.Bold : FontWeights.Normal,
                                 Foreground = new SolidColorBrush(Color.FromRgb(120, 120, 120)),
                                 HorizontalAlignment = HorizontalAlignment.Center
                             }
                         }
                     }
                 };
-                cell.MouseLeftButtonDown += (sender, e) => ShowDateDetails(currentDay, lunarDay);
+                if (isToday)
+                {
+                    cell.BorderBrush = new SolidColorBrush(Colors.Orange);
+                    cell.BorderThickness = new Thickness(1);
+                    todayCell = cell;
+                    ShowDateDetails(currentDay, lunarDay);
+                }
+                cell.MouseLeftButtonDown += (sender, e) =>
+                {
+                    if (selectedCell is not null)
+                    {
+                        selectedCell.BorderBrush = new SolidColorBrush(Colors.White);
+                        selectedCell.BorderThickness = new Thickness(0);
+                    }
+
+                    if (todayCell is not null)
+                    {
+                        todayCell.BorderBrush = new SolidColorBrush(Colors.Orange);
+                        todayCell.BorderThickness = new Thickness(1);
+                    }
+
+                    Border currentCell = (Border)sender;
+                    selectedCell = currentCell;
+                    currentCell.BorderBrush = new SolidColorBrush(Colors.Green);
+                    currentCell.BorderThickness = new Thickness(1);
+                    ShowDateDetails(currentDay, lunarDay);
+                };
                 CalendarGrid.Children.Add(cell);
             }
+        }
+
+        /// <summary>
+        /// 获取万年历信息
+        /// </summary>
+        /// <param name="calendarDate"></param>
+        /// <returns></returns>
+        private CanlendarDayInfo GetCalendarDay(CalendarDate calendarDate)
+        {
+            return new CanlendarDayInfo
+            {
+                CurrentDay = calendarDate.CalendarDay.CurrentDay,
+                LunarDayText = calendarDate.CalendarDay.LunarDayText,
+                DayType = calendarDate.CalendarDay.DayType,
+            };
         }
 
         private void ShowDateDetails(DateTime date, string lunarDay)
@@ -151,41 +210,22 @@ namespace Snow.Calendar
                              $"农历: {lunarDay}";
 
             DetailsTextBlock.Text = details;
-            DetailsPanel.Visibility = Visibility.Visible;
         }
 
-        private void HideDetailsPanel_Click(object sender, RoutedEventArgs e)
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            DetailsPanel.Visibility = Visibility.Collapsed;
+            // 获取当前窗口宽度
+            double currentWidth = e.NewSize.Width;
+
+            // 动态设置右侧列宽
+            DetailsColumn.Width = currentWidth < MinWidthToShowDetails ? new GridLength(0) : new GridLength(1, GridUnitType.Star);
         }
 
-        private string GetLunarDate(ChineseLunisolarCalendar chineseCalendar, DateTime date, out bool isFirstDayOfMonth)
+        private void Today_OnClick(object sender, RoutedEventArgs e)
         {
-            int lunarYear = chineseCalendar.GetYear(date);
-            int lunarMonth = chineseCalendar.GetMonth(date);
-            int lunarDay = chineseCalendar.GetDayOfMonth(date);
-
-            // 农历月份和日期
-            string[] lunarMonths = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"];
-            string[] lunarDays =
-            [
-                "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-                "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-                "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"
-            ];
-
-            // 判断是否为农历月初
-            isFirstDayOfMonth = lunarDay == 1;
-
-            // 返回格式化农历日期
-            try
-            {
-                return isFirstDayOfMonth ? lunarMonths[lunarMonth - 1] : lunarDays[lunarDay - 1];
-            }
-            catch
-            {
-                return lunarMonths[0];
-            }
+            YearComboBox.SelectedItem = DateTime.Now.Year;
+            MonthComboBox.SelectedItem = DateTime.Now.Month;
+            GenerateCalendar(DateTime.Now.Year, DateTime.Now.Month);
         }
     }
 }

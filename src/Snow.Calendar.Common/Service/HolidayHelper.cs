@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Snow.Calendar.Common;
+﻿using System.Globalization;
 using Snow.Calendar.Common.Model;
-using Snow.Calendar.Web.Model;
+using Snow.Calendar.Web.Common;
 
-namespace Snow.Calendar.Web.Common
+namespace Snow.Calendar.Common.Service
 {
     /// <summary>
     /// 节假日帮助接口

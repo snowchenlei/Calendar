@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Snow.Calendar.Common.Model;
+using Snow.Calendar.Common.Service;
 using Snow.Calendar.Web.Common;
 using Snow.Calendar.Web.Model;
 
@@ -45,7 +47,7 @@ namespace Snow.Calendar.Web.Controllers
         {
             return new
             {
-                Header = _buildHtml.CreateHeder(),
+                Header = _buildHtml.CreateHeader(),
                 Body = _buildHtml.CreateBody(year, month)
             };
         }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Snow.Calendar.Web.Model;
 using System.Text.Json;
+using Snow.Calendar.Common.Model;
 
 namespace Snow.Calendar.Web.Common
 {

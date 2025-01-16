@@ -4,9 +4,10 @@ using Snow.Calendar.Web.Common;
 using Snow.Calendar.Web.Model;
 using System.Globalization;
 using System.Reflection;
+using Snow.Calendar.Common;
+using Snow.Calendar.Common.Service;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
 builder.Services.AddTransient<Resource>();

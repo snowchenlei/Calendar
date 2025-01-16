@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
+using Snow.Calendar.Common;
+using Snow.Calendar.Common.Model;
+using Snow.Calendar.Common.Service;
 using Snow.Calendar.Web.Common;
 
 namespace Snow.Calendar.Web.Model
@@ -15,7 +15,7 @@ namespace Snow.Calendar.Web.Model
         /// 创建头部
         /// </summary>
         /// <returns></returns>
-        string CreateHeder();
+        string CreateHeader();
 
         /// <summary>
         /// 创建内容
@@ -60,7 +60,7 @@ namespace Snow.Calendar.Web.Model
         /// 创建头部
         /// </summary>
         /// <returns></returns>
-        public string CreateHeder()
+        public string CreateHeader()
         {
             StringBuilder sbHtml = new StringBuilder();
             sbHtml.Append("<tr>");

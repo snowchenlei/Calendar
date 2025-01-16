@@ -8,3 +8,5 @@
 /src/Snow.Calendar.Desktop/bin
 /src/Snow.Calendar.Desktop/obj
 .vshistory/
+/src/Snow.Calendar.Common/bin/Debug
+/src/Snow.Calendar.Common/obj

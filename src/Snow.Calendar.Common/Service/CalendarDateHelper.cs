@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Snow.Calendar.Common;
-using Snow.Calendar.Common.Model;
-using Snow.Calendar.Web.Model;
+﻿using Snow.Calendar.Common.Model;
+using Snow.Calendar.Web.Common;
 
-namespace Snow.Calendar.Web.Common
+namespace Snow.Calendar.Common.Service
 {
     public interface ICalendarDateHelper
     {
